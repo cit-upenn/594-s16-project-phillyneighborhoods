@@ -10,7 +10,10 @@ public class ACSData {
 	ArrayList<String> header;
 	BufferedReader reader;
 	int error;
-	int numberHeaders = 27;
+	
+	//this is the number of variables that are in the txt file, including the ZIP code
+	int numberHeaders = 107; 
+	
 	String fileName;
 	
 	public ACSData(){
@@ -64,15 +67,19 @@ public class ACSData {
 		while((tempLine = this.reader.readLine()) != null){
 			//System.out.println(tempLine);
 			
+			//first we parse out the header strings
+			//so that we can use them as keys for the ACS variables
+			//in the HashMap for each ZIP code
 			if(checkHeader == 0){
 				String[] parts = tempLine.split(",",numberHeaders);
 				for(int i = 0; i < numberHeaders; i++){
 					header.add(parts[i]);
-					//System.out.println("Header at " + parts[i]);
+					//System.out.println("Header, " + parts[i]);
 				}
 				checkHeader = 2;
 			}
 			
+			//then we read each of the lines of data for each ZIP code
 			else{
 
 				String[] parts = tempLine.split(",",numberHeaders);
@@ -107,7 +114,7 @@ public class ACSData {
 		for(String ZIPCode: allZIPCodes){
 			Set<String> allDataForZip = ACSbyZIP.get(ZIPCode).keySet();
 			for(String dataPoints: allDataForZip){
-				System.out.println("ZIP " + ZIPCode + " contains data point " + dataPoints + " with value " + ACSbyZIP.get(ZIPCode).get(dataPoints));
+				//System.out.println("ZIP " + ZIPCode + " contains data point " + dataPoints + " with value " + ACSbyZIP.get(ZIPCode).get(dataPoints));
 			}	
 		}
 		
