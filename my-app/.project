@@ -20,4 +20,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>wutever</name>
+			<type>2</type>
+			<location>/home/selah/Code/CIT594_data_struct/594-s16-project-phillyneighborhoods/my-app/src/main/java/wutever</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -1,4 +1,3 @@
-package wutever;
 
 import java.util.*;
 import java.io.*;
@@ -104,12 +103,12 @@ public class ACSData {
 	
 	private void closeFile(){
 		
-		for(String ZIPCode: allZIPCodes){
+		/*for(String ZIPCode: allZIPCodes){
 			Set<String> allDataForZip = ACSbyZIP.get(ZIPCode).keySet();
 			for(String dataPoints: allDataForZip){
 				System.out.println("ZIP " + ZIPCode + " contains data point " + dataPoints + " with value " + ACSbyZIP.get(ZIPCode).get(dataPoints));
 			}	
-		}
+		}*/
 		
 		try {
 			reader.close();
