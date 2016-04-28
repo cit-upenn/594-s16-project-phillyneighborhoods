@@ -43,10 +43,10 @@ public class InstagramData {
 	 * @throws IOException
 	 */
 	public static String[] getLatLong(String zipcode) throws JSONException, IOException{
-    	String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode;
+    		String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode;
     	
-    	GoogleJSONReader jr = new GoogleJSONReader(temp);
-    	String googleData = jr.parse();
+    		GoogleJSONReader jr = new GoogleJSONReader(temp);
+    		String googleData = jr.parse();
     	
 		//trim 
 		int firstDelimiter = googleData.indexOf("ln"); 
@@ -58,14 +58,13 @@ public class InstagramData {
 		//split
 		String lnglat[] = latitudeLongitude.split(",", 2);
 		
-    	return lnglat;
+    		return lnglat;
 	}
 	
-	public static void main(String[] args) throws JSONException, IOException{
-		String[] tempLngLat = getLatLong("19146");
-		createInstagramURL(access_token, tempLngLat);
-		
-	}
+	//public static void main(String[] args) throws JSONException, IOException{
+	//	String[] tempLngLat = getLatLong("19146");
+	//	createInstagramURL(access_token, tempLngLat);
+	//}
 
 
 }
