@@ -10,13 +10,18 @@ import java.nio.charset.Charset;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * 
+ * @author brittanybinler
+ *
+ */
+public class GoogleJSONReader {
 
-public class JSONReader {
+	private static String url = "http://maps.googleapis.com/maps/api/geocode/json?address=19146";
+//	String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=19146";
 
-	private static String url;
-
-	public JSONReader(String input){
-		this.url = input;
+	public GoogleJSONReader(String input){
+		GoogleJSONReader.url = input;
 	}
 	
 	public static String getURL(){
@@ -48,13 +53,15 @@ public class JSONReader {
 		JSONObject json = readJsonFromUrl(getURL());
 
 		String s =  json.toString();
+		System.out.println(s.length());
 		
 		//get index of "location"
 		int locationPosition = s.indexOf("location"); 
-		//	System.out.println(locationPosition);
+			System.out.println(locationPosition);
 		
 		//get index of "location_type"
 		int locationTypePosition = s.indexOf("location_type"); 
+		System.out.println(locationTypePosition);
 		
 		//get substring, e.g. location":{"lng":-75.18663959999999,"lat":39.9396284},"
 		String latitudeLongitude = s.substring(locationPosition, locationTypePosition); 
@@ -63,7 +70,7 @@ public class JSONReader {
 	  }
 	  
 //	  public static void main(String[] args) throws IOException, JSONException {
-//		String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=19146";
+//		
 //
 //	  	parse(); 
 //	  }
