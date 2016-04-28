@@ -2,132 +2,70 @@
  * 
  */
 package wutever;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Scanner;
 
-import org.json.*;
-import java.io.FileReader;
-import java.util.Iterator;
- 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import org.json.JSONException;
 
 
 /**
  * @author brittanybinler
  *
  */
+public class InstagramData {
+	static String url = "http://maps.googleapis.com/maps/api/geocode/json?address=19146";
 
-
-public class InstagramData{
-	static String input; //for testing
-
+	static String access_token = "6468350.1677ed0.51442ec921ae44989cf30c72887d0cc0";
 	
-	InstagramData(){
-		input = "jsonTest.json"; //for testing
-		parseJSON(input);
+	/**
+	 * 
+	 * @param access_token
+	 * @param lnglat
+	 * @return
+	 */
+	public static String createInstagramURL(String access_token, String[] lnglat){
+		String lng = lnglat[0];
+		String lat = lnglat[1];
+		
+		String stub1 = "https://api.instagram.com/v1/media/search?access_token="
+				+ access_token + "&" + lat + "&" + lng; 
+//		System.out.println(stub1);
+		return stub1;
 	}
 	
-	// http://maps.googleapis.com/maps/api/geocode/json?address=19146
-
-	public static void parseJSON(String input){
-		JSONParser parser = new JSONParser();
-	  
-			
-	      try{
-	         Object obj = parser.parse(input);
-	         JSONArray array = (JSONArray)obj;
-				
-//	         System.out.println("The 2nd element of array");
-//	         System.out.println(array.get(1));
-//	         System.out.println();
-
-	         JSONObject obj2 = (JSONObject)array.get(1);
-	         System.out.println("Field \"1\"");
-	         System.out.println(obj2.get("1"));    
-
-	         input = "{}";
-	         obj = parser.parse(input);
-	         System.out.println(obj);
-
-	         input = "[5,]";
-	         obj = parser.parse(input);
-	         System.out.println(obj);
-
-	         input = "[5,,2]";
-	         obj = parser.parse(input);
-	         System.out.println(obj);
-	         
-	      }catch(ParseException pe){
-			
-	         System.out.println("position: " + pe.getPosition());
-	         System.out.println(pe);
-	      }
-
+	
+	/**
+	 * 
+	 * @param input
+	 * @throws JSONException
+	 * @throws IOException
+	 */
+	public static String[] getLatLong(String zipcode) throws JSONException, IOException{
+    	String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode;
+    	
+    	GoogleJSONReader jr = new GoogleJSONReader(temp);
+    	String googleData = jr.parse();
+    	
+		//trim 
+		int firstDelimiter = googleData.indexOf("ln"); 
+		int secondDelimiter = googleData.indexOf("}"); 
+		String latitudeLongitude = googleData.substring(firstDelimiter, secondDelimiter); 
+		//format latLong for Instagram
+		latitudeLongitude = latitudeLongitude.replace("\"", "");
+		latitudeLongitude = latitudeLongitude.replace(":", "=");
+		//split
+		String lnglat[] = latitudeLongitude.split(",", 2);
+		
+    	return lnglat;
 	}
 	
-//	public static void geocoding(String addr) throws Exception {
-//	    // build a URL
-//	    String s = "http://maps.google.com/maps/api/geocode/json?" +
-//	                    "sensor=false&address=";
-//	    s += URLEncoder.encode(addr, "UTF-8");
-//	    URL url = new URL(s);
-//	 
-//	    // read from the URL
-//	    Scanner scan = new Scanner(url.openStream());
-//	    String str = new String();
-//	    while (scan.hasNext())
-//	        str += scan.nextLine();
-//	    scan.close();
-//	 
-//	    // build a JSON object
-//	    JSONObject obj = new JSONObject();
-//	    if (! obj.getString("status").equals("OK"))
-//	        return;
-//	 
-//	    // get the first result
-//	    JSONObject res = obj.getJSONArray("results").getJSONObject(0);
-//	    System.out.println(res.getString("formatted_address"));
-//	    JSONObject loc =
-//	        res.getJSONObject("geometry").getJSONObject("location");
-//	    System.out.println("lat: " + loc.getDouble("lat") +
-//	                        ", lng: " + loc.getDouble("lng"));
-//	}
-//	
-	
-	public String getJSONFromFile(String filename){
-		filename = "jsonTest.json";
+	public static void main(String[] args) throws JSONException, IOException{
+		String[] tempLngLat = getLatLong("19146");
+		createInstagramURL(access_token, tempLngLat);
 		
-    	JSONParser parser = new JSONParser();
-        try {
- 
-            Object obj = parser.parse(new FileReader(filename));
- 
-            JSONObject jsonObject = (JSONObject) obj;
- 
-            String geometry = (String) jsonObject.toJSONString();
-//            String author = (String) jsonObject.get("Author");
-//            JSONArray geometry = (JSONArray) jsonObject.get("geometry");
-// 
-            System.out.println("Geometry: " + geometry);
-//            System.out.println("Author: " + author);
-//            System.out.println("\nCompany List:");
-//            Iterator<String> iterator = companyList.iterator();
-//            while (iterator.hasNext()) {
-//                System.out.println(iterator.next());
-//            }
- 
-            return geometry;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-		
-    }	
-	
+	}
+
+
 }
-
-
