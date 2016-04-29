@@ -1,3 +1,4 @@
+package wutever;
 
 import java.util.*;
 import java.io.*;

@@ -1,6 +1,8 @@
+package wutever;
 
 import static spark.Spark.*;
 import spark.ModelAndView;
+import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 import twitter4j.GeoLocation;
 import twitter4j.Query;
@@ -17,6 +19,8 @@ public class Main {
     public static void main(String[] args) {
     	
     	staticFileLocation("/resources/templates");
+    	Spark.staticFileLocation("/public");
+    	
     	
       ACSData myACSData = new ACSData();
       HashMap<String,HashMap<String, String>> ACSbyZIP = myACSData.getACSData();
