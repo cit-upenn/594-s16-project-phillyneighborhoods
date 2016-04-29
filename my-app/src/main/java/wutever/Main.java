@@ -14,7 +14,6 @@ import java.util.*;
 
 public class Main {
 	
-	
     public static void main(String[] args) {
     	
     	staticFileLocation("/resources/templates");
@@ -24,8 +23,9 @@ public class Main {
       
     	get("/TESTZIP/:zipcode", (request, response) -> new ModelAndView(ACSbyZIP.get(request.params(":zipcode")), "test.mustache"), new MustacheTemplateEngine());
 
+    	get("/similarity", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "similarity.mustache"), new MustacheTemplateEngine());
     	
-    	get("/TESTTWITTER/:ZIP", (request, response) -> {
+    	get("/TWITTER/:ZIP", (request, response) -> {
     		//initiate values for use with mustache template
     		Map<String, Object> viewObjects = new HashMap<String, Object>();    		
 
