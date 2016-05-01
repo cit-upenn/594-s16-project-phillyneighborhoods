@@ -1,2 +1,3 @@
 *.class
 my-app/target/classes
+my-app/.settings
