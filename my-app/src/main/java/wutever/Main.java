@@ -28,8 +28,30 @@ public class Main {
     	get("/TESTZIP/:zipcode", (request, response) -> new ModelAndView(ACSbyZIP.get(request.params(":zipcode")), "test.mustache"), new MustacheTemplateEngine());
 
     	get("/similarity", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "similarity.mustache"), new MustacheTemplateEngine());
+		
+    	createInstagram();
+
+    	/*NOTE! I removed createACSData() and put this back into main() because of weird
+    	 * static variable errors when I tried to make myACSData and ACSbyZIP static class variables
+    	 * 
+         * This reads in the .txt data downloaded from the American Community Survey and brings the data
+         * into a HashMap of HashMaps such that the ZIP code is the key to the outer HashMap
+         * For each ZIP code, there's a HashMap wherein each ACS mnemonic is the key and the data value is the value
+         * 
+         * Mnemonic example: PCT_SE_T005_003 is the % Total Population: Male: Under 5 Years
+         * All mnemonic description pairs are stored in ACSMetadata.csv
+         * 
+         * Example of a call to get PCT_SE_T005_003 for 19148: ACSbyZIP.get(19148).get(PCT_SE_T005_003)
+         */
     	
-    	get("/TWITTER/:ZIP", (request, response) -> {
+    	/* 
+    	 * This handles requests for ZIP code data pages
+    	 * Such that the request is formatted like "GET /Data/12345" 
+    	 * such that request.params(":zipcode") is '12345' 
+    	*/ 
+        get("/Data/:zipcode", (request, response) -> new ModelAndView(ACSbyZIP.get(request.params(":zipcode")), "Data.mustache"), new MustacheTemplateEngine());
+    	
+        get("/TWITTER/:ZIP", (request, response) -> {
     		//initiate values for use with mustache template
     		Map<String, Object> viewObjects = new HashMap<String, Object>();    		
 
@@ -64,4 +86,10 @@ public class Main {
     	});
     	
     }
+    
+    public static void createInstagram(){
+    	InstagramJSONReader igData = new InstagramJSONReader();
+    }
+    
+	
 }
