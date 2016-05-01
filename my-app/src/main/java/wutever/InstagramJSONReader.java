@@ -148,13 +148,13 @@ public class InstagramJSONReader {
 	  }
 	
 	
-	
-	public static void main(String[] args) throws JSONException, IOException{
-		String[] tempLngLat = getLatLong("19146");
-		createInstagramURL(access_token, tempLngLat);
-		parse();
-		
-	}
+//	
+//	public static void main(String[] args) throws JSONException, IOException{
+//		String[] tempLngLat = getLatLong("19146");
+//		createInstagramURL(access_token, tempLngLat);
+//		parse();
+//		
+//	}
 
 
 }

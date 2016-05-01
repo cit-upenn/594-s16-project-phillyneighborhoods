@@ -56,24 +56,32 @@ public class GoogleJSONReader {
 		System.out.println(s.length());
 		
 		//get index of "location"
-		int locationPosition = s.indexOf("location"); 
-			System.out.println(locationPosition);
+		int firstDelimiter = s.indexOf("location"); 
+			System.out.println(firstDelimiter);
 		
 		//get index of "location_type"
-		int locationTypePosition = s.indexOf("location_type"); 
-		System.out.println(locationTypePosition);
+		int secondDelimiter = s.indexOf("location_type"); 
+		System.out.println(secondDelimiter);
 		
 		//get substring, e.g. location":{"lng":-75.18663959999999,"lat":39.9396284},"
-		String latitudeLongitude = s.substring(locationPosition, locationTypePosition); 
-
+		String latitudeLongitude = s.substring(firstDelimiter, secondDelimiter); 
+		
+		//format substring
+		int thirdDelimiter = s.indexOf("lng"); 
+		int fourthDelimiter = s.indexOf("}"); 
+		latitudeLongitude = s.substring(thirdDelimiter, fourthDelimiter); 
+		latitudeLongitude = latitudeLongitude.replace("\"", "");
+		latitudeLongitude = latitudeLongitude.replace(":", "=");
+		
+		System.out.println(latitudeLongitude);
 		return latitudeLongitude;
 	  }
 	  
-//	  public static void main(String[] args) throws IOException, JSONException {
-//		
-//
-//	  	parse(); 
-//	  }
+	  public static void main(String[] args) throws IOException, JSONException {
+		
+
+	  	parse(); 
+	  }
 	
 
 }
