@@ -5,6 +5,7 @@ import java.io.*;
 
 public class ACSData {
 
+	ACSData myACSData;
 	HashMap<String,HashMap<String, String>> ACSbyZIP;
 	ArrayList<String> allZIPCodes;
 	ArrayList<String> header;
@@ -16,7 +17,7 @@ public class ACSData {
 	
 	String fileName;
 	
-	public ACSData(){
+	private ACSData(){
 		ACSbyZIP = new HashMap<String,HashMap<String, String>>();
 		allZIPCodes = new ArrayList<String>();
 		header = new ArrayList<String>();
@@ -29,15 +30,20 @@ public class ACSData {
 			return;
 		}
 		try{
-			readFileIntoAllUsers();
+			readFile();
 		}
 		catch (IOException e) {
 			System.out.println("Error.");
 			return;
 		}
 		closeFile();
-		
-		
+	}
+	
+	public ACSData initACSData(){
+		if(myACSData == null){
+			myACSData = new ACSData();
+		}
+		return myACSData;
 	}
 	
 	private int openFile(){
@@ -56,7 +62,7 @@ public class ACSData {
 	}
 
 	
-	private void readFileIntoAllUsers() throws IOException{
+	private void readFile() throws IOException{
 		String tempLine;
 		
 		System.out.println("Reading File");

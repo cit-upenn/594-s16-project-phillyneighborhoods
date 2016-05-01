@@ -40,8 +40,8 @@ public class Main {
          * 
          * Example of a call to get PCT_SE_T005_003 for 19148: ACSbyZIP.get(19148).get(PCT_SE_T005_003)
          */
-    	ACSData myACSData = new ACSData();
-      HashMap<String,HashMap<String, String>> ACSbyZIP = myACSData.getACSData();
+    	ACSData myACSData = initACSData();
+		HashMap<String,HashMap<String, String>> ACSbyZIP = myACSData.getACSData();
     	
         
         
