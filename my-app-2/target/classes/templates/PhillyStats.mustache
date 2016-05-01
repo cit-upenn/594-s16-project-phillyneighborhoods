@@ -1,0 +1,602 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+<head>
+  <title>ZIP {{ZIP}}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      height:115px; 
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 2000px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</head>
+<body>
+
+
+<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script type="text/javascript">
+window.onload = function () {
+
+	var chartPopDen = new CanvasJS.Chart("chartContainerPopDen",
+    {
+      title:{
+        text: "Population Density"
+      },
+      axisY: {
+        title: "per square mile",
+        maximum: 37000
+      },
+      data: [
+      {
+        type: "bar",
+        showInLegend: false,
+        color: "#000070",
+        dataPoints: [
+        { label: "19102",  y: {{19102.SE_T002_002}}  },
+		{ label: "19103",  y: {{19103.SE_T002_002}}  },
+		{ label: "19104",  y: {{19104.SE_T002_002}}  },
+		{ label: "19106",  y: {{19106.SE_T002_002}}  },
+		{ label: "19107",  y: {{19107.SE_T002_002}}  },
+		{ label: "19111",  y: {{19111.SE_T002_002}}  },
+		{ label: "19111",  y: {{19111.SE_T002_002}}  },
+		{ label: "19114",  y: {{19114.SE_T002_002}}  },
+		{ label: "19115",  y: {{19115.SE_T002_002}}  },
+		{ label: "19116",  y: {{19116.SE_T002_002}}  },
+		{ label: "19118",  y: {{19118.SE_T002_002}}  },
+		{ label: "19119",  y: {{19119.SE_T002_002}}  },
+		{ label: "19120",  y: {{19120.SE_T002_002}}  },
+		{ label: "19121",  y: {{19121.SE_T002_002}}  },
+		{ label: "19122",  y: {{19122.SE_T002_002}}  },
+		{ label: "19123",  y: {{19123.SE_T002_002}}  },
+		{ label: "19124",  y: {{19124.SE_T002_002}}  },
+		{ label: "19125",  y: {{19125.SE_T002_002}}  },
+		{ label: "19126",  y: {{19126.SE_T002_002}}  },
+		{ label: "19127",  y: {{19127.SE_T002_002}}  },
+		{ label: "19128",  y: {{19128.SE_T002_002}}  },
+		{ label: "19129",  y: {{19129.SE_T002_002}}  },
+		{ label: "19130",  y: {{19130.SE_T002_002}}  },
+		{ label: "19131",  y: {{19131.SE_T002_002}}  },
+		{ label: "19132",  y: {{19132.SE_T002_002}}  },
+		{ label: "19133",  y: {{19133.SE_T002_002}}  },
+		{ label: "19134",  y: {{19134.SE_T002_002}}  },
+		{ label: "19135",  y: {{19135.SE_T002_002}}  },
+		{ label: "19136",  y: {{19136.SE_T002_002}}  },
+		{ label: "19137",  y: {{19137.SE_T002_002}}  },
+		{ label: "19138",  y: {{19138.SE_T002_002}}  },
+		{ label: "19139",  y: {{19139.SE_T002_002}}  },
+		{ label: "19140",  y: {{19140.SE_T002_002}}  },
+		{ label: "19141",  y: {{19141.SE_T002_002}}  },
+		{ label: "19142",  y: {{19142.SE_T002_002}}  },
+		{ label: "19143",  y: {{19143.SE_T002_002}}  },
+		{ label: "19144",  y: {{19144.SE_T002_002}}  },
+		{ label: "19145",  y: {{19145.SE_T002_002}}  },
+		{ label: "19146",  y: {{19146.SE_T002_002}}  },
+		{ label: "19147",  y: {{19147.SE_T002_002}}  },
+		{ label: "19148",  y: {{19148.SE_T002_002}}  },
+		{ label: "19149",  y: {{19149.SE_T002_002}}  },
+		{ label: "19150",  y: {{19150.SE_T002_002}}  },
+		{ label: "19151",  y: {{19151.SE_T002_002}}  },
+		{ label: "19152",  y: {{19152.SE_T002_002}}  },
+		{ label: "19153",  y: {{19153.SE_T002_002}}  },
+		{ label: "19154",  y: {{19154.SE_T002_002}}  }
+        ]
+      }
+      ]
+    });
+    
+    
+    var chartMedInc= new CanvasJS.Chart("chartContainerMedInc",
+    {
+      title:{
+        text: "Median Income"
+      },
+      axisY: {
+        title: "2014 Inflation Adjusted Dollars",
+        maximum: 101000
+      },
+      data: [
+      {
+        type: "bar",
+        showInLegend: false,
+        color: "#000070",
+        dataPoints: [
+			{ label: "19102",  y: {{19102.SE_T057_001}}  },
+			{ label: "19103",  y: {{19103.SE_T057_001}}  },
+			{ label: "19104",  y: {{19104.SE_T057_001}}  },
+			{ label: "19106",  y: {{19106.SE_T057_001}}  },
+			{ label: "19107",  y: {{19107.SE_T057_001}}  },
+			{ label: "19111",  y: {{19111.SE_T057_001}}  },
+			{ label: "19111",  y: {{19111.SE_T057_001}}  },
+			{ label: "19114",  y: {{19114.SE_T057_001}}  },
+			{ label: "19115",  y: {{19115.SE_T057_001}}  },
+			{ label: "19116",  y: {{19116.SE_T057_001}}  },
+			{ label: "19118",  y: {{19118.SE_T057_001}}  },
+			{ label: "19119",  y: {{19119.SE_T057_001}}  },
+			{ label: "19120",  y: {{19120.SE_T057_001}}  },
+			{ label: "19121",  y: {{19121.SE_T057_001}}  },
+			{ label: "19122",  y: {{19122.SE_T057_001}}  },
+			{ label: "19123",  y: {{19123.SE_T057_001}}  },
+			{ label: "19124",  y: {{19124.SE_T057_001}}  },
+			{ label: "19125",  y: {{19125.SE_T057_001}}  },
+			{ label: "19126",  y: {{19126.SE_T057_001}}  },
+			{ label: "19127",  y: {{19127.SE_T057_001}}  },
+			{ label: "19128",  y: {{19128.SE_T057_001}}  },
+			{ label: "19129",  y: {{19129.SE_T057_001}}  },
+			{ label: "19130",  y: {{19130.SE_T057_001}}  },
+			{ label: "19131",  y: {{19131.SE_T057_001}}  },
+			{ label: "19132",  y: {{19132.SE_T057_001}}  },
+			{ label: "19133",  y: {{19133.SE_T057_001}}  },
+			{ label: "19134",  y: {{19134.SE_T057_001}}  },
+			{ label: "19135",  y: {{19135.SE_T057_001}}  },
+			{ label: "19136",  y: {{19136.SE_T057_001}}  },
+			{ label: "19137",  y: {{19137.SE_T057_001}}  },
+			{ label: "19138",  y: {{19138.SE_T057_001}}  },
+			{ label: "19139",  y: {{19139.SE_T057_001}}  },
+			{ label: "19140",  y: {{19140.SE_T057_001}}  },
+			{ label: "19141",  y: {{19141.SE_T057_001}}  },
+			{ label: "19142",  y: {{19142.SE_T057_001}}  },
+			{ label: "19143",  y: {{19143.SE_T057_001}}  },
+			{ label: "19144",  y: {{19144.SE_T057_001}}  },
+			{ label: "19145",  y: {{19145.SE_T057_001}}  },
+			{ label: "19146",  y: {{19146.SE_T057_001}}  },
+			{ label: "19147",  y: {{19147.SE_T057_001}}  },
+			{ label: "19148",  y: {{19148.SE_T057_001}}  },
+			{ label: "19149",  y: {{19149.SE_T057_001}}  },
+			{ label: "19150",  y: {{19150.SE_T057_001}}  },
+			{ label: "19151",  y: {{19151.SE_T057_001}}  },
+			{ label: "19152",  y: {{19152.SE_T057_001}}  },
+			{ label: "19153",  y: {{19153.SE_T057_001}}  },
+			{ label: "19154",  y: {{19154.SE_T057_001}}  }
+        ]
+      }
+      ]
+    });
+    
+    var chartGini= new CanvasJS.Chart("chartContainerGini",
+    {
+      title:{
+        text: "Gini Index"
+      },
+      axisY: {
+        title: "Index",
+        maximum: 0.61,
+        minimum: 0.4
+      },
+      data: [
+      {
+        type: "bar",
+        showInLegend: false,
+        color: "#000070",
+        dataPoints: [
+			{ label: "19102",  y: {{19102.SE_T157_001}}  },
+			{ label: "19103",  y: {{19103.SE_T157_001}}  },
+			{ label: "19104",  y: {{19104.SE_T157_001}}  },
+			{ label: "19106",  y: {{19106.SE_T157_001}}  },
+			{ label: "19107",  y: {{19107.SE_T157_001}}  },
+			{ label: "19111",  y: {{19111.SE_T157_001}}  },
+			{ label: "19111",  y: {{19111.SE_T157_001}}  },
+			{ label: "19114",  y: {{19114.SE_T157_001}}  },
+			{ label: "19115",  y: {{19115.SE_T157_001}}  },
+			{ label: "19116",  y: {{19116.SE_T157_001}}  },
+			{ label: "19118",  y: {{19118.SE_T157_001}}  },
+			{ label: "19119",  y: {{19119.SE_T157_001}}  },
+			{ label: "19120",  y: {{19120.SE_T157_001}}  },
+			{ label: "19121",  y: {{19121.SE_T157_001}}  },
+			{ label: "19122",  y: {{19122.SE_T157_001}}  },
+			{ label: "19123",  y: {{19123.SE_T157_001}}  },
+			{ label: "19124",  y: {{19124.SE_T157_001}}  },
+			{ label: "19125",  y: {{19125.SE_T157_001}}  },
+			{ label: "19126",  y: {{19126.SE_T157_001}}  },
+			{ label: "19127",  y: {{19127.SE_T157_001}}  },
+			{ label: "19128",  y: {{19128.SE_T157_001}}  },
+			{ label: "19129",  y: {{19129.SE_T157_001}}  },
+			{ label: "19130",  y: {{19130.SE_T157_001}}  },
+			{ label: "19131",  y: {{19131.SE_T157_001}}  },
+			{ label: "19132",  y: {{19132.SE_T157_001}}  },
+			{ label: "19133",  y: {{19133.SE_T157_001}}  },
+			{ label: "19134",  y: {{19134.SE_T157_001}}  },
+			{ label: "19135",  y: {{19135.SE_T157_001}}  },
+			{ label: "19136",  y: {{19136.SE_T157_001}}  },
+			{ label: "19137",  y: {{19137.SE_T157_001}}  },
+			{ label: "19138",  y: {{19138.SE_T157_001}}  },
+			{ label: "19139",  y: {{19139.SE_T157_001}}  },
+			{ label: "19140",  y: {{19140.SE_T157_001}}  },
+			{ label: "19141",  y: {{19141.SE_T157_001}}  },
+			{ label: "19142",  y: {{19142.SE_T157_001}}  },
+			{ label: "19143",  y: {{19143.SE_T157_001}}  },
+			{ label: "19144",  y: {{19144.SE_T157_001}}  },
+			{ label: "19145",  y: {{19145.SE_T157_001}}  },
+			{ label: "19146",  y: {{19146.SE_T157_001}}  },
+			{ label: "19147",  y: {{19147.SE_T157_001}}  },
+			{ label: "19148",  y: {{19148.SE_T157_001}}  },
+			{ label: "19149",  y: {{19149.SE_T157_001}}  },
+			{ label: "19150",  y: {{19150.SE_T157_001}}  },
+			{ label: "19151",  y: {{19151.SE_T157_001}}  },
+			{ label: "19152",  y: {{19152.SE_T157_001}}  },
+			{ label: "19153",  y: {{19153.SE_T157_001}}  },
+			{ label: "19154",  y: {{19154.SE_T157_001}}  }
+        ]
+      }
+      ]
+    });
+    
+    
+     var chartVacant= new CanvasJS.Chart("chartContainerVacant",
+    {
+      title:{
+        text: "Share of Houses Vacant"
+      },
+      axisY: {
+        title: "Percent",
+        maximum: 30
+      },
+      data: [
+      {
+        type: "bar",
+        showInLegend: false,
+        color: "#000070",
+        dataPoints: [
+			{ label: "19102",  y: {{19102.PCT_SE_T095_003}}  },
+			{ label: "19103",  y: {{19103.PCT_SE_T095_003}}  },
+			{ label: "19104",  y: {{19104.PCT_SE_T095_003}}  },
+			{ label: "19106",  y: {{19106.PCT_SE_T095_003}}  },
+			{ label: "19107",  y: {{19107.PCT_SE_T095_003}}  },
+			{ label: "19111",  y: {{19111.PCT_SE_T095_003}}  },
+			{ label: "19111",  y: {{19111.PCT_SE_T095_003}}  },
+			{ label: "19114",  y: {{19114.PCT_SE_T095_003}}  },
+			{ label: "19115",  y: {{19115.PCT_SE_T095_003}}  },
+			{ label: "19116",  y: {{19116.PCT_SE_T095_003}}  },
+			{ label: "19118",  y: {{19118.PCT_SE_T095_003}}  },
+			{ label: "19119",  y: {{19119.PCT_SE_T095_003}}  },
+			{ label: "19120",  y: {{19120.PCT_SE_T095_003}}  },
+			{ label: "19121",  y: {{19121.PCT_SE_T095_003}}  },
+			{ label: "19122",  y: {{19122.PCT_SE_T095_003}}  },
+			{ label: "19123",  y: {{19123.PCT_SE_T095_003}}  },
+			{ label: "19124",  y: {{19124.PCT_SE_T095_003}}  },
+			{ label: "19125",  y: {{19125.PCT_SE_T095_003}}  },
+			{ label: "19126",  y: {{19126.PCT_SE_T095_003}}  },
+			{ label: "19127",  y: {{19127.PCT_SE_T095_003}}  },
+			{ label: "19128",  y: {{19128.PCT_SE_T095_003}}  },
+			{ label: "19129",  y: {{19129.PCT_SE_T095_003}}  },
+			{ label: "19130",  y: {{19130.PCT_SE_T095_003}}  },
+			{ label: "19131",  y: {{19131.PCT_SE_T095_003}}  },
+			{ label: "19132",  y: {{19132.PCT_SE_T095_003}}  },
+			{ label: "19133",  y: {{19133.PCT_SE_T095_003}}  },
+			{ label: "19134",  y: {{19134.PCT_SE_T095_003}}  },
+			{ label: "19135",  y: {{19135.PCT_SE_T095_003}}  },
+			{ label: "19136",  y: {{19136.PCT_SE_T095_003}}  },
+			{ label: "19137",  y: {{19137.PCT_SE_T095_003}}  },
+			{ label: "19138",  y: {{19138.PCT_SE_T095_003}}  },
+			{ label: "19139",  y: {{19139.PCT_SE_T095_003}}  },
+			{ label: "19140",  y: {{19140.PCT_SE_T095_003}}  },
+			{ label: "19141",  y: {{19141.PCT_SE_T095_003}}  },
+			{ label: "19142",  y: {{19142.PCT_SE_T095_003}}  },
+			{ label: "19143",  y: {{19143.PCT_SE_T095_003}}  },
+			{ label: "19144",  y: {{19144.PCT_SE_T095_003}}  },
+			{ label: "19145",  y: {{19145.PCT_SE_T095_003}}  },
+			{ label: "19146",  y: {{19146.PCT_SE_T095_003}}  },
+			{ label: "19147",  y: {{19147.PCT_SE_T095_003}}  },
+			{ label: "19148",  y: {{19148.PCT_SE_T095_003}}  },
+			{ label: "19149",  y: {{19149.PCT_SE_T095_003}}  },
+			{ label: "19150",  y: {{19150.PCT_SE_T095_003}}  },
+			{ label: "19151",  y: {{19151.PCT_SE_T095_003}}  },
+			{ label: "19152",  y: {{19152.PCT_SE_T095_003}}  },
+			{ label: "19153",  y: {{19153.PCT_SE_T095_003}}  },
+			{ label: "19154",  y: {{19154.PCT_SE_T095_003}}  }
+        ]
+      }
+      ]
+    });
+    
+    var chartHomeValue= new CanvasJS.Chart("chartContainerHomeValue",
+    {
+      title:{
+        text: "Median Home Value"
+      },
+      axisY: {
+        title: "Dollars",
+        maximum: 490000
+      },
+      data: [
+      {
+        type: "bar",
+        showInLegend: false,
+        color: "#000070",
+        dataPoints: [
+			{ label: "19102",  y: {{19102.SE_T101_001}}  },
+			{ label: "19103",  y: {{19103.SE_T101_001}}  },
+			{ label: "19104",  y: {{19104.SE_T101_001}}  },
+			{ label: "19106",  y: {{19106.SE_T101_001}}  },
+			{ label: "19107",  y: {{19107.SE_T101_001}}  },
+			{ label: "19111",  y: {{19111.SE_T101_001}}  },
+			{ label: "19111",  y: {{19111.SE_T101_001}}  },
+			{ label: "19114",  y: {{19114.SE_T101_001}}  },
+			{ label: "19115",  y: {{19115.SE_T101_001}}  },
+			{ label: "19116",  y: {{19116.SE_T101_001}}  },
+			{ label: "19118",  y: {{19118.SE_T101_001}}  },
+			{ label: "19119",  y: {{19119.SE_T101_001}}  },
+			{ label: "19120",  y: {{19120.SE_T101_001}}  },
+			{ label: "19121",  y: {{19121.SE_T101_001}}  },
+			{ label: "19122",  y: {{19122.SE_T101_001}}  },
+			{ label: "19123",  y: {{19123.SE_T101_001}}  },
+			{ label: "19124",  y: {{19124.SE_T101_001}}  },
+			{ label: "19125",  y: {{19125.SE_T101_001}}  },
+			{ label: "19126",  y: {{19126.SE_T101_001}}  },
+			{ label: "19127",  y: {{19127.SE_T101_001}}  },
+			{ label: "19128",  y: {{19128.SE_T101_001}}  },
+			{ label: "19129",  y: {{19129.SE_T101_001}}  },
+			{ label: "19130",  y: {{19130.SE_T101_001}}  },
+			{ label: "19131",  y: {{19131.SE_T101_001}}  },
+			{ label: "19132",  y: {{19132.SE_T101_001}}  },
+			{ label: "19133",  y: {{19133.SE_T101_001}}  },
+			{ label: "19134",  y: {{19134.SE_T101_001}}  },
+			{ label: "19135",  y: {{19135.SE_T101_001}}  },
+			{ label: "19136",  y: {{19136.SE_T101_001}}  },
+			{ label: "19137",  y: {{19137.SE_T101_001}}  },
+			{ label: "19138",  y: {{19138.SE_T101_001}}  },
+			{ label: "19139",  y: {{19139.SE_T101_001}}  },
+			{ label: "19140",  y: {{19140.SE_T101_001}}  },
+			{ label: "19141",  y: {{19141.SE_T101_001}}  },
+			{ label: "19142",  y: {{19142.SE_T101_001}}  },
+			{ label: "19143",  y: {{19143.SE_T101_001}}  },
+			{ label: "19144",  y: {{19144.SE_T101_001}}  },
+			{ label: "19145",  y: {{19145.SE_T101_001}}  },
+			{ label: "19146",  y: {{19146.SE_T101_001}}  },
+			{ label: "19147",  y: {{19147.SE_T101_001}}  },
+			{ label: "19148",  y: {{19148.SE_T101_001}}  },
+			{ label: "19149",  y: {{19149.SE_T101_001}}  },
+			{ label: "19150",  y: {{19150.SE_T101_001}}  },
+			{ label: "19151",  y: {{19151.SE_T101_001}}  },
+			{ label: "19152",  y: {{19152.SE_T101_001}}  },
+			{ label: "19153",  y: {{19153.SE_T101_001}}  },
+			{ label: "19154",  y: {{19154.SE_T101_001}}  }
+        ]
+      }
+      ]
+    });
+    
+        
+    var chartRent= new CanvasJS.Chart("chartContainerRent",
+    {
+      title:{
+        text: "Median Rent"
+      },
+      axisY: {
+        title: "Dollars",
+        maximum: 2000
+      },
+      data: [
+      {
+        type: "bar",
+        showInLegend: false,
+        color: "#000070",
+        dataPoints: [
+			{ label: "19102",  y: {{19102.SE_T104_001}}  },
+			{ label: "19103",  y: {{19103.SE_T104_001}}  },
+			{ label: "19104",  y: {{19104.SE_T104_001}}  },
+			{ label: "19106",  y: {{19106.SE_T104_001}}  },
+			{ label: "19107",  y: {{19107.SE_T104_001}}  },
+			{ label: "19111",  y: {{19111.SE_T104_001}}  },
+			{ label: "19111",  y: {{19111.SE_T104_001}}  },
+			{ label: "19114",  y: {{19114.SE_T104_001}}  },
+			{ label: "19115",  y: {{19115.SE_T104_001}}  },
+			{ label: "19116",  y: {{19116.SE_T104_001}}  },
+			{ label: "19118",  y: {{19118.SE_T104_001}}  },
+			{ label: "19119",  y: {{19119.SE_T104_001}}  },
+			{ label: "19120",  y: {{19120.SE_T104_001}}  },
+			{ label: "19121",  y: {{19121.SE_T104_001}}  },
+			{ label: "19122",  y: {{19122.SE_T104_001}}  },
+			{ label: "19123",  y: {{19123.SE_T104_001}}  },
+			{ label: "19124",  y: {{19124.SE_T104_001}}  },
+			{ label: "19125",  y: {{19125.SE_T104_001}}  },
+			{ label: "19126",  y: {{19126.SE_T104_001}}  },
+			{ label: "19127",  y: {{19127.SE_T104_001}}  },
+			{ label: "19128",  y: {{19128.SE_T104_001}}  },
+			{ label: "19129",  y: {{19129.SE_T104_001}}  },
+			{ label: "19130",  y: {{19130.SE_T104_001}}  },
+			{ label: "19131",  y: {{19131.SE_T104_001}}  },
+			{ label: "19132",  y: {{19132.SE_T104_001}}  },
+			{ label: "19133",  y: {{19133.SE_T104_001}}  },
+			{ label: "19134",  y: {{19134.SE_T104_001}}  },
+			{ label: "19135",  y: {{19135.SE_T104_001}}  },
+			{ label: "19136",  y: {{19136.SE_T104_001}}  },
+			{ label: "19137",  y: {{19137.SE_T104_001}}  },
+			{ label: "19138",  y: {{19138.SE_T104_001}}  },
+			{ label: "19139",  y: {{19139.SE_T104_001}}  },
+			{ label: "19140",  y: {{19140.SE_T104_001}}  },
+			{ label: "19141",  y: {{19141.SE_T104_001}}  },
+			{ label: "19142",  y: {{19142.SE_T104_001}}  },
+			{ label: "19143",  y: {{19143.SE_T104_001}}  },
+			{ label: "19144",  y: {{19144.SE_T104_001}}  },
+			{ label: "19145",  y: {{19145.SE_T104_001}}  },
+			{ label: "19146",  y: {{19146.SE_T104_001}}  },
+			{ label: "19147",  y: {{19147.SE_T104_001}}  },
+			{ label: "19148",  y: {{19148.SE_T104_001}}  },
+			{ label: "19149",  y: {{19149.SE_T104_001}}  },
+			{ label: "19150",  y: {{19150.SE_T104_001}}  },
+			{ label: "19151",  y: {{19151.SE_T104_001}}  },
+			{ label: "19152",  y: {{19152.SE_T104_001}}  },
+			{ label: "19153",  y: {{19153.SE_T104_001}}  },
+			{ label: "19154",  y: {{19154.SE_T104_001}}  }
+        ]
+      }
+      ]
+    });
+    
+    chartPopDen.render();
+    chartMedInc.render();
+    chartGini.render();
+    chartVacant.render();
+    chartHomeValue.render();
+    chartRent.render();
+	
+}
+</script>
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">
+      	<img src="http://hiddencityphila.org/wp-content/uploads/2013/09/philashape.jpg" alt="Philly" style="width:80px;height:80px;">
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/Quiz">Quiz</a></li>
+        <li><a href="/About">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+	    <p><a href="/PhillyStats">Philly Stats</a></p>
+      	<p><a href="/Data/19102">19102</a></p>
+		<p><a href="/Data/19103">19103</a></p>
+		<p><a href="/Data/19104">19104</a></p>
+		<p><a href="/Data/19106">19106</a></p>
+		<p><a href="/Data/19107">19107</a></p>
+		<p><a href="/Data/19111">19111</a></p>
+		<p><a href="/Data/19114">19114</a></p>
+		<p><a href="/Data/19115">19115</a></p>
+		<p><a href="/Data/19116">19116</a></p>
+		<p><a href="/Data/19118">19118</a></p>
+		<p><a href="/Data/19119">19119</a></p>
+		<p><a href="/Data/19120">19120</a></p>
+		<p><a href="/Data/19121">19121</a></p>
+		<p><a href="/Data/19122">19122</a></p>
+		<p><a href="/Data/19123">19123</a></p>
+		<p><a href="/Data/19124">19124</a></p>
+		<p><a href="/Data/19125">19125</a></p>
+		<p><a href="/Data/19126">19126</a></p>
+		<p><a href="/Data/19127">19127</a></p>
+		<p><a href="/Data/19128">19128</a></p>
+		<p><a href="/Data/19129">19129</a></p>
+		<p><a href="/Data/19130">19130</a></p>
+		<p><a href="/Data/19131">19131</a></p>
+		<p><a href="/Data/19132">19132</a></p>
+		<p><a href="/Data/19133">19133</a></p>
+		<p><a href="/Data/19134">19134</a></p>
+		<p><a href="/Data/19135">19135</a></p>
+		<p><a href="/Data/19136">19136</a></p>
+		<p><a href="/Data/19137">19137</a></p>
+		<p><a href="/Data/19138">19138</a></p>
+		<p><a href="/Data/19139">19139</a></p>
+		<p><a href="/Data/19140">19140</a></p>
+		<p><a href="/Data/19141">19141</a></p>
+		<p><a href="/Data/19142">19142</a></p>
+		<p><a href="/Data/19143">19143</a></p>
+		<p><a href="/Data/19144">19144</a></p>
+		<p><a href="/Data/19145">19145</a></p>
+		<p><a href="/Data/19146">19146</a></p>
+		<p><a href="/Data/19147">19147</a></p>
+		<p><a href="/Data/19148">19148</a></p>
+		<p><a href="/Data/19149">19149</a></p>
+		<p><a href="/Data/19150">19150</a></p>
+		<p><a href="/Data/19151">19151</a></p>
+		<p><a href="/Data/19152">19152</a></p>
+		<p><a href="/Data/19153">19153</a></p>
+		<p><a href="/Data/19154">19154</a></p>	
+    </div>
+    <div class="col-sm-8 text-left"> 
+    
+    	
+      	<div class="container-fluid">
+   			<div class="row">
+   				<div class="col-md-6">	
+      				<div id="chartContainerPopDen" style="height: 700px; width: 600px;"></div>
+      			</div>
+   		 	</div>
+   		 	<div class="row">
+   		 		<div class="col-md-6">	
+      				<div id="chartContainerMedInc" style="height: 700px; width: 600px;"></div>
+      			</div>
+   		 	</div>
+   		 	<div class="row">
+   		 		<div class="col-md-6">	
+      				<div id="chartContainerGini" style="height: 700px; width: 600px;"></div>
+      			</div>
+   		 	</div>
+   		 	<div class="row">
+   		 		<div class="col-md-6">	
+      				<div id="chartContainerVacant" style="height: 700px; width: 600px;"></div>
+      			</div>
+   		 	</div>
+   		 	<div class="row">
+   		 		<div class="col-md-6">	
+      				<div id="chartContainerHomeValue" style="height: 700px; width: 600px;"></div>
+      			</div>
+   		 	</div>
+   		 	<div class="row">
+   		 		<div class="col-md-6">	
+      				<div id="chartContainerRent" style="height: 700px; width: 600px;"></div>
+      			</div>
+   		 	</div>
+		</div>
+      	
+      	
+      
+    </div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>RIGHT SIDE THINGS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer class="container-fluid text-center">
+  <p>Philly Neighborhoods, Spring 2016 CIT 594</p>
+  <p>Amelia Garrett, Selah Lynch, Brit Binler, Yashus Gowda</p>
+</footer>
+
+
+</body>
+ </html>

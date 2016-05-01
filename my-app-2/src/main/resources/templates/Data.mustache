@@ -1,0 +1,508 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+<head>
+  <title>ZIP {{ZIP}}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      height:115px; 
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 2000px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</head>
+<body>
+
+
+
+
+<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script type="text/javascript">
+window.onload = function () {
+
+	var chartPop = new CanvasJS.Chart("chartContainerPop",
+    {
+      title:{
+        text: "Population"
+      },
+      axisY: {
+        title: "Percent",
+        maximum: 26
+      },
+      data: [
+      {
+        type: "bar",
+        showInLegend: true,
+        legendText: "Men",
+        color: "#000070",
+        dataPoints: [
+        { label: "85 and over",  y: {{PCT_SE_T005_014}}  },
+		{ label: "75-84",  y: {{PCT_SE_T005_013}}  },
+		{ label: "65-74",  y: {{PCT_SE_T005_012}}  },
+		{ label: "55-64",  y: {{PCT_SE_T005_011}}  },
+		{ label: "45-54",  y: {{PCT_SE_T005_010}}  },
+		{ label: "35-44",  y: {{PCT_SE_T005_009}}  },
+		{ label: "25-34",  y: {{PCT_SE_T005_008}}  },
+		{ label: "18-24",  y: {{PCT_SE_T005_007}}  },
+		{ label: "15-17",  y: {{PCT_SE_T005_006}}  },
+		{ label: "10-14",  y: {{PCT_SE_T005_005}}  },
+		{ label: "5-9",    y: {{PCT_SE_T005_004}}  },
+		{ label: "Under 5",  y: {{PCT_SE_T005_003}}  }
+        ]
+      },
+      {
+        type: "bar",
+        showInLegend: true,
+        legendText: "Women",
+        color: "#ffb6c1",
+        dataPoints: [
+        { label: "85 and over",  y: {{PCT_SE_T005_027}}  },
+		{ label: "75-84",  y: {{PCT_SE_T005_026}}  },
+		{ label: "65-74",  y: {{PCT_SE_T005_025}}  },
+		{ label: "55-64",  y: {{PCT_SE_T005_024}}  },
+		{ label: "45-54",  y: {{PCT_SE_T005_023}}  },
+		{ label: "35-44",  y: {{PCT_SE_T005_022}}  },
+		{ label: "25-34",  y: {{PCT_SE_T005_021}}  },
+		{ label: "18-24",  y: {{PCT_SE_T005_020}}  },
+		{ label: "15-17",  y: {{PCT_SE_T005_019}}  },
+		{ label: "10-14",  y: {{PCT_SE_T005_018}}  },
+		{ label: "5-9",  y: {{PCT_SE_T005_017}}  },
+		{ label: "Under 5",  y: {{PCT_SE_T005_016}}  }
+        ]
+      }
+      ]
+    });
+
+	var chartPieChildren = new CanvasJS.Chart("chartContainerPieChildren",
+	{
+		theme: "theme2",
+		title:{
+			text: "Types of households with children"
+		},		
+		data: [
+		{       
+			type: "pie",
+			showInLegend: true,
+			toolTipContent: "{y} - #percent %",
+			yValueFormatString: "#0.#,,. Million",
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{  y: {{PCT_SE_T018_002}}, indexLabel: "family with children" },
+				{  y: {{PCT_SE_T018_013}} + {{PCT_SE_T018_014}}, indexLabel: "family without children" },
+				{  y: {{PCT_SE_T018_017}}, indexLabel: "non-family without children" }
+			]
+		}
+		]
+	});
+	
+	var chartPieMarriage = new CanvasJS.Chart("chartContainerPieMarriage",
+	{
+		theme: "theme2",
+		title:{
+			text: "Marriage status"
+		},		
+		data: [
+		{       
+			type: "pie",
+			showInLegend: true,
+			toolTipContent: "{y} - #percent %",
+			yValueFormatString: "#0.#,,. Million",
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{  y: {{PCT_SE_T022_002}}, indexLabel: "never married" },
+				{  y: {{PCT_SE_T022_003}}, indexLabel: "married" },
+				{  y: {{PCT_SE_T022_004}}, indexLabel: "separated" },
+				{  y: {{PCT_SE_T022_005}}, indexLabel: "widowed" },
+				{  y: {{PCT_SE_T022_006}}, indexLabel: "divorced" }
+			]
+		}
+		]
+	});
+	
+	var chartPieUnmarried= new CanvasJS.Chart("chartContainerPieUnmarried",
+	{
+		theme: "theme2",
+		title:{
+			text: "Households with unmarried partners"
+		},		
+		data: [
+		{       
+			type: "pie",
+			showInLegend: true,
+			toolTipContent: "{y} - #percent %",
+			yValueFormatString: "#0.#,,. Million",
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{  y: {{PCT_SE_T023_003}}, indexLabel: "same sex, male owner" },
+				{  y: {{PCT_SE_T023_004}}, indexLabel: "same sex, female owner" },
+				{  y: {{PCT_SE_T023_007}}, indexLabel: "opposite sex, male owner" },
+				{  y: {{PCT_SE_T023_008}}, indexLabel: "opposite sex, female owner" },
+				{  y: {{PCT_SE_T023_009}}, indexLabel: "households without unmarried partners" }
+			]
+		}
+		]
+	});
+	
+	
+	var chartPieEdu= new CanvasJS.Chart("chartContainerPieEdu",
+	{
+		theme: "theme2",
+		title:{
+			text: "Max educational attainment"
+		},		
+		data: [
+		{       
+			type: "pie",
+			showInLegend: true,
+			toolTipContent: "{y} - #percent %",
+			yValueFormatString: "#0.#,,. Million",
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{  y: {{PCT_SE_T150_002}}, indexLabel: "< high school" },
+				{  y: {{PCT_SE_T150_003}} - {{PCT_SE_T150_004}}, indexLabel: "high school" },
+				{  y: {{PCT_SE_T150_004}} - {{PCT_SE_T150_005}}, indexLabel: "some college" },
+				{  y: {{PCT_SE_T150_005}} - {{PCT_SE_T150_006}}, indexLabel: "bachelor's" },
+				{  y: {{PCT_SE_T150_006}} - {{PCT_SE_T150_007}}, indexLabel: "master's" },
+				{  y: {{PCT_SE_T150_007}} - {{PCT_SE_T150_008}}, indexLabel: "professional" },
+				{  y: {{PCT_SE_T150_008}}, indexLabel: "doctorate" }
+			]
+		}
+		]
+	});
+	
+	
+	var chartPieEmployment= new CanvasJS.Chart("chartContainerPieEmployment",
+	{
+		theme: "theme2",
+		title:{
+			text: "Employment status"
+		},		
+		data: [
+		{       
+			type: "pie",
+			showInLegend: true,
+			toolTipContent: "{y} - #percent %",
+			yValueFormatString: "#0.#,,. Million",
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{  y: {{PCT_SE_T033_003}}, indexLabel: "Military" },
+				{  y: {{PCT_SE_T033_005}}, indexLabel: "Employed" },
+				{  y: {{PCT_SE_T033_006}}, indexLabel: "Unemployed" },
+				{  y: {{PCT_SE_T033_007}}, indexLabel: "Not in labor force" }
+			]
+		}
+		]
+	});
+	
+	
+	var chartPieVacant= new CanvasJS.Chart("chartContainerPieVacant",
+	{
+		theme: "theme2",
+		title:{
+			text: "Reasons for household vacancy"
+		},		
+		data: [
+		{       
+			type: "pie",
+			showInLegend: true,
+			toolTipContent: "{y} - #percent %",
+			yValueFormatString: "#0.#,,. Million",
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{  y: {{PCT_SE_T096_002}}, indexLabel: "for rent" },
+				{  y: {{PCT_SE_T096_003}}, indexLabel: "for sale" },
+				{  y: {{PCT_SE_T096_004}}, indexLabel: "other reason" }
+			]
+		}
+		]
+	});
+	
+	
+	var chartPieHouseType= new CanvasJS.Chart("chartContainerPieHouseType",
+	{
+		theme: "theme2",
+		title:{
+			text: "Share of housing units by building type"
+		},		
+		data: [
+		{       
+			type: "pie",
+			showInLegend: true,
+			toolTipContent: "{y} - #percent %",
+			yValueFormatString: "#0.#,,. Million",
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{  y: {{PCT_SE_T097_002}}, indexLabel: "Single" },
+				{  y: {{PCT_SE_T097_005}}, indexLabel: "Double" },
+				{  y: {{PCT_SE_T097_006}}, indexLabel: "3-4" },
+				{  y: {{PCT_SE_T097_007}}, indexLabel: "5-9" },
+				{  y: {{PCT_SE_T097_008}}, indexLabel: "10-19" },
+				{  y: {{PCT_SE_T097_009}}, indexLabel: "20-49" },
+				{  y: {{PCT_SE_T097_010}}, indexLabel: "50+" },
+				{  y: {{PCT_SE_T097_011}} +  {{PCT_SE_T097_012}}, indexLabel: "Other" }
+			]
+		}
+		]
+	});
+	
+	var chartPieMoved= new CanvasJS.Chart("chartContainerPieMoved",
+	{
+		theme: "theme2",
+		title:{
+			text: "Share of housing units by building type"
+		},		
+		data: [
+		{       
+			type: "pie",
+			showInLegend: true,
+			toolTipContent: "{y} - #percent %",
+			yValueFormatString: "#0.#,,. Million",
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{  y: {{PCT_SE_T130_002}}, indexLabel: "didn't move" },
+				{  y: {{PCT_SE_T130_003}}, indexLabel: "within Philadelphia" },
+				{  y: {{PCT_SE_T130_004}}, indexLabel: "from different county in PA" },
+				{  y: {{PCT_SE_T130_005}}, indexLabel: "from different state" },
+				{  y: {{PCT_SE_T130_006}}, indexLabel: "from abroad" }
+				]
+		}
+		]
+	});
+	
+	chartPop.render();
+	chartPieChildren.render();
+	chartPieMarriage.render();
+	chartPieUnmarried.render();
+	chartPieEdu.render();
+	chartPieEmployment.render();
+	chartPieVacant.render();
+	chartPieHouseType.render();
+	chartPieMoved.render();
+	
+}
+</script>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">
+      	<img src="http://hiddencityphila.org/wp-content/uploads/2013/09/philashape.jpg" alt="Philly" style="width:80px;height:80px;">
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/Quiz">Quiz</a></li>
+        <li><a href="/About">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+    	<p><a href="/PhillyStats">Philly Stats</a></p>
+      	<p><a href="/Data/19102">19102</a></p>
+		<p><a href="/Data/19103">19103</a></p>
+		<p><a href="/Data/19104">19104</a></p>
+		<p><a href="/Data/19106">19106</a></p>
+		<p><a href="/Data/19107">19107</a></p>
+		<p><a href="/Data/19111">19111</a></p>
+		<p><a href="/Data/19114">19114</a></p>
+		<p><a href="/Data/19115">19115</a></p>
+		<p><a href="/Data/19116">19116</a></p>
+		<p><a href="/Data/19118">19118</a></p>
+		<p><a href="/Data/19119">19119</a></p>
+		<p><a href="/Data/19120">19120</a></p>
+		<p><a href="/Data/19121">19121</a></p>
+		<p><a href="/Data/19122">19122</a></p>
+		<p><a href="/Data/19123">19123</a></p>
+		<p><a href="/Data/19124">19124</a></p>
+		<p><a href="/Data/19125">19125</a></p>
+		<p><a href="/Data/19126">19126</a></p>
+		<p><a href="/Data/19127">19127</a></p>
+		<p><a href="/Data/19128">19128</a></p>
+		<p><a href="/Data/19129">19129</a></p>
+		<p><a href="/Data/19130">19130</a></p>
+		<p><a href="/Data/19131">19131</a></p>
+		<p><a href="/Data/19132">19132</a></p>
+		<p><a href="/Data/19133">19133</a></p>
+		<p><a href="/Data/19134">19134</a></p>
+		<p><a href="/Data/19135">19135</a></p>
+		<p><a href="/Data/19136">19136</a></p>
+		<p><a href="/Data/19137">19137</a></p>
+		<p><a href="/Data/19138">19138</a></p>
+		<p><a href="/Data/19139">19139</a></p>
+		<p><a href="/Data/19140">19140</a></p>
+		<p><a href="/Data/19141">19141</a></p>
+		<p><a href="/Data/19142">19142</a></p>
+		<p><a href="/Data/19143">19143</a></p>
+		<p><a href="/Data/19144">19144</a></p>
+		<p><a href="/Data/19145">19145</a></p>
+		<p><a href="/Data/19146">19146</a></p>
+		<p><a href="/Data/19147">19147</a></p>
+		<p><a href="/Data/19148">19148</a></p>
+		<p><a href="/Data/19149">19149</a></p>
+		<p><a href="/Data/19150">19150</a></p>
+		<p><a href="/Data/19151">19151</a></p>
+		<p><a href="/Data/19152">19152</a></p>
+		<p><a href="/Data/19153">19153</a></p>
+		<p><a href="/Data/19154">19154</a></p>	
+    </div>
+    <div class="col-sm-8 text-left"> 
+    
+    	
+      	<h4>Zip Code: {{ZIP}}</h4>
+      	
+      	<table>
+		  <thead><tr>
+		    <th>Description</th>
+		    <th>Value</th>
+		    </tr></thead>
+		  <tbody>
+		    <tr>
+		      <td>Population density</td>
+		      <td>{{SE_T002_002}} per sq. mile</td>
+		    </tr>
+		    <tr>
+		      <td>Average commute</td>
+		      <td>{{SE_T147_001}} min</td>
+		    </tr>
+		    <tr>
+		      <td>Median household income</td>
+		      <td>${{SE_T057_001}} 2014 Inflation Adjusted</td>
+		    </tr>
+		    <tr>
+		      <td>Income per capita</td>
+		      <td>${{SE_T083_001}} 2014 Inflation Adjusted</td>
+		    </tr>
+		    <tr>
+		      <td>Gini index</td>
+		      <td>{{SE_T157_001}}</td>
+		    </tr>
+		    <tr>
+		      <td>Share of houses with retirement income</td>
+		      <td>{{PCT_SE_T081_002}}%</td>
+		    </tr>
+		    <tr>
+		      <td>Share of owner-occupied houses</td>
+		      <td>{{PCT_SE_T094_002}}%</td>
+		    </tr>		      
+		    <tr>
+		      <td>Share of houses vacant</td>
+		      <td>{{PCT_SE_T095_003}}%</td>
+		    </tr>
+		    <tr>
+		      <td>Median year structure built</td>
+		      <td>{{SE_T098_001}}</td>
+		    </tr>
+		    <tr>
+		      <td>Median house value</td>
+		      <td>${{SE_T101_001}}</td>
+		    </tr>
+		    <tr>
+		      <td>Median gross rent</td>
+		      <td>${{SE_T104_001}}</td>
+		    </tr>
+		    
+		  </tbody>
+		</table>
+		
+      
+      	<div class="container-fluid">
+   			<div class="row">
+   				<div class="col-md-6">	
+      				<div id="chartContainerPop" style="height: 400px; width: 500px;"></div>
+      			</div>
+   		 	</div>
+		</div>
+      
+      	<div class="container-fluid">
+   			<div class="row">
+        		<div class="col-md-6">	
+					<div id="chartContainerPieChildren" style="height: 300px; width: 100%;"></div>
+				</div>
+        		<div class="col-md-6">	
+					<div id="chartContainerPieMarriage" style="height: 300px; width: 100%;"></div>
+				</div>
+        		<div class="col-md-6">	
+					<div id="chartContainerPieUnmarried" style="height: 300px; width: 100%;"></div>
+				</div>
+        		<div class="col-md-6">	
+					<div id="chartContainerPieEdu" style="height: 300px; width: 100%;"></div>
+				</div>
+        		<div class="col-md-6">	
+					<div id="chartContainerPieEmployment" style="height: 300px; width: 100%;"></div>
+				</div>
+        		<div class="col-md-6">		
+					<div id="chartContainerPieVacant" style="height: 300px; width: 100%;"></div>
+				</div>
+        		<div class="col-md-6">	
+					<div id="chartContainerPieHouseType" style="height: 300px; width: 100%;"></div>
+				</div>
+        		<div class="col-md-6">	
+					<div id="chartContainerPieMoved" style="height: 300px; width: 100%;"></div>
+			     </div>
+   		 	</div>
+		</div>
+      
+    </div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>RIGHT SIDE THINGS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer class="container-fluid text-center">
+  <p>Philly Neighborhoods, Spring 2016 CIT 594</p>
+  <p>Amelia Garrett, Selah Lynch, Brit Binler, Yashus Gowda</p>
+</footer>
+
+
+</body>
+ </html>
