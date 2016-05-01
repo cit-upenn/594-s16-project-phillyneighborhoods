@@ -5,6 +5,7 @@ public class Location {
 	  private String latitude;
 	  private String longitude;
 	  private String zip;
+	  
 	public String getZip() {
 		return zip;
 	}
