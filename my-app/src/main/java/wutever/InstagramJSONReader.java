@@ -43,7 +43,7 @@ public class InstagramJSONReader {
 	 * Setter method for String url
 	 * @param input
 	 */
-	public static void setURL(String input){
+	private static void setURL(String input){
 		url = input;
 	}
 	
@@ -75,7 +75,7 @@ public class InstagramJSONReader {
 	private static String[] getLatLong(String zipcode) throws JSONException, IOException{
     	String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode;
     	GoogleJSONReader jr = new GoogleJSONReader(temp);
-    	String googleData = jr.parse();
+    	String googleData = jr.getLatitudeLongitude();
     	
 		//split
 		String lnglat[] = googleData.split(",", 2);
@@ -136,8 +136,8 @@ public class InstagramJSONReader {
 			JSONObject images = temp.getJSONObject("images");
 			JSONObject image = images.getJSONObject("standard_resolution");
 			String imageURL = image.getString("url");
-			
-			map.put(Integer.toString(i), imageURL);
+			String key = "picture_" + Integer.toString(i);
+			map.put(key, imageURL);
 			System.out.println(imageURL);
 			
 		}
