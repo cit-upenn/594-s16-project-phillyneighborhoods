@@ -5,7 +5,7 @@ import java.io.*;
 
 public class ACSData {
 
-	ACSData myACSData;
+	static ACSData myACSData;
 	HashMap<String,HashMap<String, String>> ACSbyZIP;
 	ArrayList<String> allZIPCodes;
 	ArrayList<String> header;
@@ -39,7 +39,7 @@ public class ACSData {
 		closeFile();
 	}
 	
-	public ACSData initACSData(){
+	public static ACSData initACSData(){
 		if(myACSData == null){
 			myACSData = new ACSData();
 		}

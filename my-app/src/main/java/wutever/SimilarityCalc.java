@@ -22,13 +22,15 @@ import java.util.TreeSet;
 public class SimilarityCalc {
 	
 	public static ArrayList<String> getZips(){
-		final HashMap<String,HashMap<String, String>> dataz = new ACSData().getACSData();
+		ACSData acs = ACSData.initACSData();
+		final HashMap<String,HashMap<String, String>> dataz = acs.getACSData(); 
 		ArrayList<String> zips = new ArrayList<String>(new TreeSet<String>(dataz.keySet()));	
 		return zips;
 	}
 	
 	public static Double[][] doit(){
-		final HashMap<String,HashMap<String, String>> dataz = new ACSData().getACSData();
+		ACSData acs = ACSData.initACSData();
+		final HashMap<String,HashMap<String, String>> dataz = acs.getACSData();
 		ArrayList<String> zips = new ArrayList<String>(new TreeSet<String>(dataz.keySet()));	
 
 		ArrayList<String> columns = new ArrayList<String>();
