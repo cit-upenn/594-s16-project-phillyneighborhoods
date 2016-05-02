@@ -73,9 +73,8 @@ public class InstagramJSONReader {
 	 * @throws IOException
 	 */
 	private static String[] getLatLong(String zipcode) throws JSONException, IOException{
-    	String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode;
-    	GoogleJSONReader jr = new GoogleJSONReader(temp);
-    	String googleData = jr.getLatitudeLongitude();
+    	GoogleJSONReader g = new GoogleJSONReader();
+    	String googleData = g.getLatitudeLongitude(zipcode);
     	
 		//split
 		String lnglat[] = googleData.split(",", 2);
