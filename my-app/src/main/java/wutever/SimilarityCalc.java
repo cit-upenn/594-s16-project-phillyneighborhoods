@@ -21,9 +21,15 @@ import java.util.TreeSet;
 
 public class SimilarityCalc {
 	
-	public static void doit(){
+	public static ArrayList<String> getZips(){
 		final HashMap<String,HashMap<String, String>> dataz = new ACSData().getACSData();
-		ArrayList<String> zips = new ArrayList<String>(new TreeSet(dataz.keySet()));	
+		ArrayList<String> zips = new ArrayList<String>(new TreeSet<String>(dataz.keySet()));	
+		return zips;
+	}
+	
+	public static Double[][] doit(){
+		final HashMap<String,HashMap<String, String>> dataz = new ACSData().getACSData();
+		ArrayList<String> zips = new ArrayList<String>(new TreeSet<String>(dataz.keySet()));	
 
 		ArrayList<String> columns = new ArrayList<String>();
 		columns.add("SE_T002_002"); //population density
@@ -32,28 +38,79 @@ public class SimilarityCalc {
 		columns.add("SE_T098_001"); //Median year structure built
 		columns.add("PCT_SE_T130_006"); //Moved from abroad
 		
-		Double[][] data = new Double[columns.size()][zips.size()];
+		/////////////////////////////////////////////
+		//Retrieve data as arrays from ACSdata
 		
-		for(int i=0; i<zips.size(); i++){
-			String zip = zips.get(i);
-			for(int j=0; j<columns.size(); j++){
-				String column = columns.get(j);
+		Double[][] data = new Double[columns.size()][zips.size()];		
+		for(int i=0; i<columns.size(); i++){
+			for(int j=0; j<zips.size(); j++){
+				String zip = zips.get(j);
+				String column = columns.get(i);
 				System.out.println("Processing zip " + zip + " and column "+ column);
 				HashMap<String, String> zipDataz = dataz.get(zip);
 				String dataStr = zipDataz.get(column);
 
 				if(dataStr!=null){
-					data[j][i] = Double.parseDouble(dataStr);					
+					data[i][j] = Double.parseDouble(dataStr);					
 				}
 				else{
-					data[j][i] = null;
+					data[i][j] = null;
 				}
 			}			
 		}
 		
-		for(int i =0; i<columns.size(); i++){
+		/////////////////////////////////////////////
+		//Calculate mean, stddev and zscore of data
+		
+		Double[][] dataZscored = new Double[columns.size()][zips.size()];
+		Double sum, sumSq, mean, stdDev;
+		for(int i=0; i<columns.size(); i++){
+			//calculate stats!
+			sum = 0.0;
+			sumSq = 0.0;
+			for(int j=0; j<zips.size(); j++){
+				sum += data[i][j];
+				sumSq += data[i][j] * data[i][j];
+			}
+			mean = sum/zips.size();
+			stdDev = Math.sqrt(sumSq/zips.size());
+			//fill out zscore data
+			for(int j=0; j<zips.size(); j++){
+				dataZscored[i][j] = (data[i][j]-mean)/stdDev;
+			}
+			//print the results
 			System.out.println(columns.get(i) + " " + new ArrayList<Double>(Arrays.asList(data[i])));
+			System.out.println(columns.get(i) + " " + new ArrayList<Double>(Arrays.asList(dataZscored[i])));
 		}
+
+		/////////////////////////////////////////////
+		//Calculate mean, stddev and zscore of data
+		
+		Double[][] zipSimilarity = new Double[zips.size()][zips.size()];
+		String zipI, zipJ, column;
+		Double zipDiff, dist;
+		for(int i = 0; i<zips.size(); i++){
+			for(int j = 0; j<zips.size(); j++){
+				zipI = zips.get(i);
+				zipJ = zips.get(j);
+				sumSq = 0.0;
+				//calculate similarity for this zip pair
+				for(int k = 0; k<columns.size();k++){
+					column = columns.get(k);
+					try {
+	          zipDiff = dataZscored[k][i] - dataZscored[k][j];
+						sumSq += (zipDiff * zipDiff);
+          } catch (Exception e) {
+	          e.printStackTrace();
+          }
+				}
+				dist = Math.sqrt(sumSq);
+				zipSimilarity[i][j] = dist;
+			}			
+			System.out.println(Arrays.asList(zipSimilarity[i]));
+		}
+	
+		return zipSimilarity;
 	}
 		
 	

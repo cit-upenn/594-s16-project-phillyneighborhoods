@@ -5,6 +5,9 @@ import spark.ModelAndView;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 import twitter4j.GeoLocation;
+import twitter4j.JSONArray;
+import twitter4j.JSONObject;
+//import twitter4j.JSONObject;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -12,6 +15,9 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import wutever.ACSData;
+
+
+
 
 
 import java.util.*;
@@ -76,7 +82,42 @@ public class Main {
         get("/Data/:zipcode", (request, response) -> new ModelAndView(ACSbyZIP.get(request.params(":zipcode")), "Data.mustache"), new MustacheTemplateEngine());
     	
         get("/similarity", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "similarity.mustache"), new MustacheTemplateEngine());
-    		
+
+        get("/similarity.json", (request, response) -> {
+        	response.type("json");
+        	//VERTICIES
+        	JSONArray nodes = new JSONArray();
+        	ArrayList<String> zips = SimilarityCalc.getZips();
+        	for(int i = 0; i<zips.size(); i++){
+        		JSONObject o = new JSONObject();
+        		o.put("name", zips.get(i));
+        		o.put("group", 1);
+        		nodes.put(o);
+        	}
+        	
+        	//EDGES
+        	Double[][] sims = SimilarityCalc.doit();
+        	JSONArray links = new JSONArray();
+        	for(int i = 0; i<zips.size(); i++){
+          	for(int j = 0; j<zips.size(); j++){
+	        		Double distance = sims[i][j];
+	        		if(distance < 3 && !zips.get(i).equals("19102") && !zips.get(j).equals("19102")){
+		        		JSONObject o = new JSONObject();
+		        		o.put("source", i);
+		        		o.put("target", j);
+		        		o.put("value", (int)(4-distance));
+		        		links.put(o);
+	        		}
+          	}
+        	}
+        	
+        	//COMBINE AND RETURN
+        	JSONObject js = new JSONObject();
+        	js.put("nodes", nodes);
+        	js.put("links", links);
+        	return js.toString(2);
+        });
+
         
         get("/TWITTER/:ZIP", (request, response) -> {
     		//initiate values for use with mustache template
@@ -114,6 +155,7 @@ public class Main {
     	});
     	
     }
+    
     
     public static void createInstagram(){
     	InstagramJSONReader igData = new InstagramJSONReader();
