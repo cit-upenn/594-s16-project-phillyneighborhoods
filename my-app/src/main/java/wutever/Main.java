@@ -83,6 +83,9 @@ public class Main {
     	
         get("/similarity", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "similarity.mustache"), new MustacheTemplateEngine());
 
+        get("/SimilarityGraph", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "SimilarityGraph.mustache"), new MustacheTemplateEngine());
+
+        
         get("/similarity.json", (request, response) -> {
         	response.type("json");
         	//VERTICIES
