@@ -77,11 +77,11 @@ public class GoogleJSONReader {
 		return latitudeLongitude;
 	  }
 	  
-	  public static void main(String[] args) throws IOException, JSONException {
-		
-
-	  	parse(); 
-	  }
+//	  public static void main(String[] args) throws IOException, JSONException {
+//		
+//
+//	  	parse(); 
+//	  }
 	
 
 }
