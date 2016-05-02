@@ -53,7 +53,7 @@ public class InstagramJSONReader {
 	 * @param lnglat
 	 * @return igURL
 	 */
-	public static String createInstagramURL(String access_token, String[] lnglat){
+	private static String createInstagramURL(String access_token, String[] lnglat){
 		String lng = lnglat[0];
 		String lat = lnglat[1];
 		
@@ -72,7 +72,7 @@ public class InstagramJSONReader {
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	public static String[] getLatLong(String zipcode) throws JSONException, IOException{
+	private static String[] getLatLong(String zipcode) throws JSONException, IOException{
     	String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode;
     	GoogleJSONReader jr = new GoogleJSONReader(temp);
     	String googleData = jr.parse();
@@ -105,7 +105,7 @@ public class InstagramJSONReader {
 	  * @throws IOException
 	  * @throws JSONException
 	  */
-	  public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+	  private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 	    InputStream inputStream = new URL(url).openStream();
 	    
 	    try {
@@ -124,60 +124,51 @@ public class InstagramJSONReader {
 	   * @throws JSONException
 	   * @throws IOException
 	   */
-	  public static HashMap<String, HashMap<String, String>> parse() throws JSONException, IOException{  
+	  private static HashMap<String, String> parse() throws JSONException, IOException{  
 		JSONObject json = readJsonFromUrl(getURL());
 		JSONArray data = json.getJSONArray("data");
 		
-		HashMap<String, HashMap<String, String>> photos = new HashMap<String, HashMap<String, String>>();
-		
-		
-		
-		
-//		for(int i = 0; i < data.length(); i++){ //data is a JSONArray of JSONObjects
-//			Object temp = data.;
-//			
-//			Iterator<?> keys = data.keys();
-//			HashMap<String, String> map = new HashMap<String, String>();
-//			System.out.println((String) keys.next());
-////			while(keys.hasNext()){
-////	            String key = (String) keys.next();
-////	            String value = json.getString(key); 
-////	            System.out.println(value);
-////	            map.put(key, value);
-////
-////	        }
-//	        System.out.println("map : "+ map);
-//
-//		}
-//		
-		
-		
-        
+		HashMap<String, String> map = new HashMap<String, String>();
+		for(int i = 0; i < data.length(); i++){ //data is a JSONArray of JSONObjects
+			
 
-		String s =  json.toString();
-
-
-        System.out.println("json : "+ data);
+			JSONObject temp = data.getJSONObject(i);
+			JSONObject images = temp.getJSONObject("images");
+			JSONObject image = images.getJSONObject("standard_resolution");
+			String imageURL = image.getString("url");
+			
+			map.put(Integer.toString(i), imageURL);
+			System.out.println(imageURL);
+			
+		}
 		
-
-		
-//		JSONObject images = data.getJSONObject("images");
-		
-//		System.out.println(images);
-		
-//		int firstDelimiter = s.indexOf("location"); 
-//		int secondDelimiter = s.indexOf("location_type"); 
-//		String latitudeLongitude = s.substring(firstDelimiter, secondDelimiter); 
-
-		return photos;
+		return map;
 	  }
+	  
+	  
+	/**
+	 * Creates a hashmap for a zipcode with urls for Instagram photos at that location  
+	 * @param zipcode
+	 * @return photos
+	 * @throws JSONException
+	 * @throws IOException
+	 */
+	public static HashMap<String, HashMap<String, String>> getZipcodePhotos(String zipcode) throws JSONException, IOException{
+		HashMap<String, HashMap<String, String>> photos = new HashMap<String, HashMap<String, String>>();
+		String[] tempLngLat = getLatLong(zipcode);
+		String igURL = createInstagramURL(access_token, tempLngLat);
+		HashMap<String, String> photosforZip = parse();
+		
+		photos.put(zipcode, photosforZip);
+		return photos;
+	}
 	
 	
 	
 //	public static void main(String[] args) throws JSONException, IOException{
 //		String[] tempLngLat = getLatLong("19146");
 //		String igURL = createInstagramURL(access_token, tempLngLat);
-//		parse();
+//		HashMap<String, String> photosforZip = parse();
 //		
 //	}
 

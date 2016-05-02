@@ -57,11 +57,11 @@ public class GoogleJSONReader {
 		
 		//get index of "location"
 		int firstDelimiter = s.indexOf("location"); 
-			System.out.println(firstDelimiter);
+//			System.out.println(firstDelimiter);
 		
 		//get index of "location_type"
 		int secondDelimiter = s.indexOf("location_type"); 
-		System.out.println(secondDelimiter);
+//		System.out.println(secondDelimiter);
 		
 		//get substring, e.g. location":{"lng":-75.18663959999999,"lat":39.9396284},"
 		String latitudeLongitude = s.substring(firstDelimiter, secondDelimiter); 
@@ -73,7 +73,7 @@ public class GoogleJSONReader {
 		latitudeLongitude = latitudeLongitude.replace("\"", "");
 		latitudeLongitude = latitudeLongitude.replace(":", "=");
 		
-		System.out.println(latitudeLongitude);
+//		System.out.println(latitudeLongitude);
 		return latitudeLongitude;
 	  }
 	  
