@@ -121,7 +121,7 @@ public class ACSData {
 			Set<String> allDataForZip = ACSbyZIP.get(ZIPCode).keySet();
 			for(String dataPoints: allDataForZip){
 				//System.out.println("ZIP " + ZIPCode + " contains data point " + dataPoints + " with value " + ACSbyZIP.get(ZIPCode).get(dataPoints));
-			}	
+			}
 		}
 		
 		try {
