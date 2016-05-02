@@ -46,7 +46,7 @@ public class Main {
          * Example of a call to get PCT_SE_T005_003 for 19148: ACSbyZIP.get(19148).get(PCT_SE_T005_003)
          */
     	ACSData myACSData = ACSData.initACSData();
-		HashMap<String,HashMap<String, String>> ACSbyZIP = myACSData.getACSData();
+		HashMap<String,HashMap<String, Object>> ACSbyZIP = myACSData.getACSData();
     	
         
         
@@ -148,11 +148,11 @@ public class Main {
         }
         List<Status> tweets;
         tweets = qr.getTweets();
-        String tweetsString = "Tweets:";
+        
         for(int i =0; i<tweets.size(); i++){
-        	tweetsString += tweets.get(i).getText();
+        	viewObjects.put("Tweet" + i, tweets.get(i).getText());
         }
-      	viewObjects.put("alltweets", tweetsString);    		
+
     		
         ModelAndView mv = new ModelAndView(viewObjects, "twitter.mustache");
         MustacheTemplateEngine mte = new MustacheTemplateEngine();

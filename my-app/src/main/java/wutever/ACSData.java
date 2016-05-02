@@ -6,7 +6,7 @@ import java.io.*;
 public class ACSData {
 
 	static ACSData myACSData;
-	HashMap<String,HashMap<String, String>> ACSbyZIP;
+	HashMap<String,HashMap<String, Object>> ACSbyZIP;
 	ArrayList<String> allZIPCodes;
 	ArrayList<String> header;
 	BufferedReader reader;
@@ -18,7 +18,7 @@ public class ACSData {
 	String fileName;
 	
 	private ACSData(){
-		ACSbyZIP = new HashMap<String,HashMap<String, String>>();
+		ACSbyZIP = new HashMap<String,HashMap<String, Object>>();
 		allZIPCodes = new ArrayList<String>();
 		header = new ArrayList<String>();
 		fileName = "ACSData.txt";
@@ -97,7 +97,7 @@ public class ACSData {
 					allZIPCodes.add(parts[0]);
 					
 					//create a new hash map for the zip code and add data to it
-					HashMap<String,String> newMap = new HashMap<String,String>();
+					HashMap<String, Object> newMap = new HashMap<String, Object>();
 					for(int i = 0; i < header.size(); i++){
 						newMap.put(header.get(i), parts[i]);
 					}
@@ -133,7 +133,7 @@ public class ACSData {
 		}
 	}
 	
-	public HashMap<String,HashMap<String, String>> getACSData(){
+	public HashMap<String,HashMap<String, Object>> getACSData(){
 		return ACSbyZIP;
 	}
 	
