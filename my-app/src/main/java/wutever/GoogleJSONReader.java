@@ -16,9 +16,9 @@ import org.json.JSONObject;
  *
  */
 public class GoogleJSONReader {
-
-	private static String url = "http://maps.googleapis.com/maps/api/geocode/json?address=";
-//	String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=19146";
+	
+	private static final String stub = "http://maps.googleapis.com/maps/api/geocode/json?address=";
+	public static String url;
 
 	/**
 	 * Constructor 
@@ -34,9 +34,12 @@ public class GoogleJSONReader {
 		return url;
 	}
 	
-	private static String setURL(String zipcode){
-		url = url + zipcode;
-		return url;
+	/**
+	 * Setter method for URL
+	 * @param zipcode
+	 */
+	private static void setURL(String zipcode){
+		url = stub + zipcode;
 	}
 
 	/**
@@ -108,7 +111,7 @@ public class GoogleJSONReader {
 		return latitudeLongitude;
 	  }
 	  
-	  public static String getLatitudeLongitude(String zipcode) throws JSONException, IOException{
+	  public String getLatitudeLongitude(String zipcode) throws JSONException, IOException{
 		  setURL(zipcode);
 		  String latlong = parse();
 		  return latlong;
