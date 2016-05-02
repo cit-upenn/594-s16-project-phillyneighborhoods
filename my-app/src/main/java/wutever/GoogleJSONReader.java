@@ -18,28 +18,38 @@ import org.json.JSONObject;
 public class GoogleJSONReader {
 	
 	private static final String stub = "http://maps.googleapis.com/maps/api/geocode/json?address=";
-	public static String url;
+   private static GoogleJSONReader instance = new GoogleJSONReader();
 
-	/**
-	 * Constructor 
-	 */
-	public GoogleJSONReader(){
-	}
+   /**
+    * Constructor
+    */
+   private GoogleJSONReader(){
+	   
+   }
+
+   /**
+    * Getter method for instance of JSON Reader
+    * @return instance
+    */
+   public static GoogleJSONReader getInstance(){
+      return instance;
+   }
 	
 	/**
-	 * Getter method for URL
-	 * @return url
+	 * Getter method for stub
+	 * @return stub
 	 */
 	public static String getURL(){
-		return url;
+		return stub;
 	}
 	
 	/**
-	 * Setter method for URL
+	 * Create URL
 	 * @param zipcode
 	 */
-	private static void setURL(String zipcode){
-		url = stub + zipcode;
+	private static synchronized String createURL(String zipcode){
+		String url = stub + zipcode;
+		return url;
 	}
 
 	/**
@@ -48,7 +58,7 @@ public class GoogleJSONReader {
 	 * @return stringBuilder.toString()
 	 * @throws IOException
 	 */
-	 private static String readAll(Reader reader) throws IOException {
+	 private static synchronized String readAll(Reader reader) throws IOException {
 	    StringBuilder stringBuilder = new StringBuilder();
 	    int next;
 	    while ((next = reader.read()) != -1) {
@@ -64,7 +74,7 @@ public class GoogleJSONReader {
 	  * @throws IOException
 	  * @throws JSONException
 	  */
-	  private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+	  private static synchronized JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 	    InputStream inputStream = new URL(url).openStream();
 	    
 	    try {
@@ -83,7 +93,7 @@ public class GoogleJSONReader {
 	   * @throws JSONException
 	   * @throws IOException
 	   */
-	  private static String parse() throws JSONException, IOException{
+	  private static synchronized String parse() throws JSONException, IOException{
 		JSONObject json = readJsonFromUrl(getURL());
 
 		String s =  json.toString();
@@ -111,15 +121,13 @@ public class GoogleJSONReader {
 		return latitudeLongitude;
 	  }
 	  
-	  public String getLatitudeLongitude(String zipcode) throws JSONException, IOException{
-		  setURL(zipcode);
+	  public synchronized String getLatitudeLongitude(String zipcode) throws JSONException, IOException{
+		  createURL(zipcode);
 		  String latlong = parse();
 		  return latlong;
 	  }
 	  
 //	  public static void main(String[] args) throws IOException, JSONException {
-//		
-//
 //	  	parse(); 
 //	  }
 	
