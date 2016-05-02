@@ -126,13 +126,13 @@ public class Main {
         
         get("/TWITTER/:ZIP", (request, response) -> {
     		//initiate values for use with mustache template
-    		Map<String, Object> viewObjects = new HashMap<String, Object>();    		
-
+        	//Map<String, Object> viewObjects = new HashMap<String, Object>();    		
+        	
     		
       	//get latitude and longitude from GoogleAPI
       	Double[] latLong = GoogleApisWrapper.getLatLongForZip(request.params(":ZIP"));
-      	viewObjects.put("lat", latLong[0]);    		
-      	viewObjects.put("lng", latLong[1]);    		
+      	//viewObjects.put("lat", latLong[0]);    		
+      	//viewObjects.put("lng", latLong[1]);    		
 
       	//get tweets from twitter API
       	GeoLocation coords = new GeoLocation(latLong[0], latLong[1]);
@@ -149,12 +149,11 @@ public class Main {
         List<Status> tweets;
         tweets = qr.getTweets();
         
-        for(int i =0; i<tweets.size(); i++){
-        	viewObjects.put("Tweet" + i, tweets.get(i).getText());
-        }
-
+        
+        ACSbyZIP.get(request.params(":ZIP")).put("Tweets",tweets);
+        //viewObjects.put("Tweet" + i, tweets.get(i).getText());
     		
-        ModelAndView mv = new ModelAndView(viewObjects, "twitter.mustache");
+        ModelAndView mv = new ModelAndView(ACSbyZIP.get(request.params(":ZIP")), "twitter.mustache");
         MustacheTemplateEngine mte = new MustacheTemplateEngine();
         return mte.render(mv);
     	});
