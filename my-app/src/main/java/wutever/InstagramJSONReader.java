@@ -31,128 +31,144 @@ public class InstagramJSONReader {
 	
 	static String url;
 	
+	/**
+	 * Getter method for String url
+	 * @return url
+	 */
 	public static String getURL(){
 		return url;
 	}
 	
-	public static void setURL(String input){
+	/**
+	 * Setter method for String url
+	 * @param input
+	 */
+	private static void setURL(String input){
 		url = input;
 	}
 	
 	/**
-	 * 
+	 * Creates Instagram API URL using access token, latitude, longitude, and media search endpoint
 	 * @param access_token
 	 * @param lnglat
-	 * @return
+	 * @return igURL
 	 */
-	public static String createInstagramURL(String access_token, String[] lnglat){
+	private static String createInstagramURL(String access_token, String[] lnglat){
 		String lng = lnglat[0];
 		String lat = lnglat[1];
 		
-		String stub = "https://api.instagram.com/v1/media/search?access_token="
+		String igURL = "https://api.instagram.com/v1/media/search?access_token="
 				+ access_token + "&" + lat + "&" + lng + "&count=100"; 
-		//System.out.println(stub);
+		//System.out.println(igURL);
 		
-		setURL(stub);
-		return stub;
+		setURL(igURL);
+		return igURL;
 	}
 	
 	
 	/**
-	 * 
-	 * @param input
+	 * Get latitude and longitude for a given zipcode, entered as a String using GoogleJSONReader class
+	 * @param zipcode
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	public static String[] getLatLong(String zipcode) throws JSONException, IOException{
+	private static String[] getLatLong(String zipcode) throws JSONException, IOException{
     	String temp = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode;
-    	
     	GoogleJSONReader jr = new GoogleJSONReader(temp);
-    	String googleData = jr.parse();
+    	String googleData = jr.getLatitudeLongitude();
     	
-		//trim 
-		int firstDelimiter = googleData.indexOf("ln"); 
-		int secondDelimiter = googleData.indexOf("}"); 
-		String latitudeLongitude = googleData.substring(firstDelimiter, secondDelimiter); 
-		//format latLong for Instagram
-		latitudeLongitude = latitudeLongitude.replace("\"", "");
-		latitudeLongitude = latitudeLongitude.replace(":", "=");
 		//split
-		String lnglat[] = latitudeLongitude.split(",", 2);
-		
+		String lnglat[] = googleData.split(",", 2);
     	return lnglat;
 	}
 	
 	
-	 private static String readAll(Reader rd) throws IOException {
-		    StringBuilder sb = new StringBuilder();
-		    int cp;
-		    while ((cp = rd.read()) != -1) {
-		      sb.append((char) cp);
+	/**
+	 * StringBuilder class reads
+	 * @param rd
+	 * @return stringBuilder.toString()
+	 * @throws IOException
+	 */
+	 private static String readAll(Reader reader) throws IOException {
+		    StringBuilder stringBuilder = new StringBuilder();
+		    int next;
+		    while ((next = reader.read()) != -1) {
+		    	stringBuilder.append((char) next);
 		    }
-		    return sb.toString();
+		    return stringBuilder.toString();
 		  }
 
-	  public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-	    InputStream is = new URL(url).openStream();
+	 /**
+	  * Reads JSON from a given URL, entered as a String
+	  * @param url
+	  * @return json
+	  * @throws IOException
+	  * @throws JSONException
+	  */
+	  private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+	    InputStream inputStream = new URL(url).openStream();
+	    
 	    try {
-	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-	      String jsonText = readAll(rd);
+	      BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+	      String jsonText = readAll(reader);
 	      JSONObject json = new JSONObject(jsonText);
 	      return json;
 	    } finally {
-	      is.close();
+	    	inputStream.close();
 	    }
 	  }
 	  
-	  public static String parse() throws JSONException, IOException{  
+	  /**
+	   * Creates a hashmap with zipcodes as a key, and another hashmap with photo URLs for values
+	   * @return photoURLS
+	   * @throws JSONException
+	   * @throws IOException
+	   */
+	  private static HashMap<String, String> parse() throws JSONException, IOException{  
 		JSONObject json = readJsonFromUrl(getURL());
 		JSONArray data = json.getJSONArray("data");
 		
-//		for(int i = 0; i < data.length(); i++){ //data is a JSONArray of JSONObjects
-//			Object temp = data.;
-//			
-//			Iterator<?> keys = data.keys();
-//			HashMap<String, String> map = new HashMap<String, String>();
-//			System.out.println((String) keys.next());
-////			while(keys.hasNext()){
-////	            String key = (String) keys.next();
-////	            String value = json.getString(key); 
-////	            System.out.println(value);
-////	            map.put(key, value);
-////
-////	        }
-//	        System.out.println("map : "+ map);
-//
-//		}
-//		
-		String s =  json.toString();
-		
-        
+		HashMap<String, String> map = new HashMap<String, String>();
+		for(int i = 0; i < data.length(); i++){ //data is a JSONArray of JSONObjects
+			
 
+			JSONObject temp = data.getJSONObject(i);
+			JSONObject images = temp.getJSONObject("images");
+			JSONObject image = images.getJSONObject("standard_resolution");
+			String imageURL = image.getString("url");
+			String key = "picture_" + Integer.toString(i);
+			map.put(key, imageURL);
+			System.out.println(imageURL);
+			
+		}
 		
-
-//        System.out.println("json : "+ data);
-		
-
-		
-//		JSONObject images = data.getJSONObject("images");
-		
-//		System.out.println(images);
-		
-//		int firstDelimiter = s.indexOf("location"); 
-//		int secondDelimiter = s.indexOf("location_type"); 
-//		String latitudeLongitude = s.substring(firstDelimiter, secondDelimiter); 
-
-		return s;
+		return map;
 	  }
+	  
+	  
+	/**
+	 * Creates a hashmap for a zipcode with urls for Instagram photos at that location  
+	 * @param zipcode
+	 * @return photos
+	 * @throws JSONException
+	 * @throws IOException
+	 */
+	public static HashMap<String, HashMap<String, String>> getZipcodePhotos(String zipcode) throws JSONException, IOException{
+		HashMap<String, HashMap<String, String>> photos = new HashMap<String, HashMap<String, String>>();
+		String[] tempLngLat = getLatLong(zipcode);
+		String igURL = createInstagramURL(access_token, tempLngLat);
+		HashMap<String, String> photosforZip = parse();
+		
+		photos.put(zipcode, photosforZip);
+		return photos;
+	}
 	
 	
-//	
+	
 //	public static void main(String[] args) throws JSONException, IOException{
 //		String[] tempLngLat = getLatLong("19146");
-//		createInstagramURL(access_token, tempLngLat);
-//		parse();
+//		String igURL = createInstagramURL(access_token, tempLngLat);
+//		HashMap<String, String> photosforZip = parse();
 //		
 //	}
 

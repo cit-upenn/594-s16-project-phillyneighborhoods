@@ -29,8 +29,7 @@ public class Main {
     	staticFileLocation("/resources/templates");
     	Spark.staticFileLocation("/public");
     	
-    
-    	
+       	
     	createInstagram();
 
 
@@ -92,23 +91,26 @@ public class Main {
         	JSONArray nodes = new JSONArray();
         	ArrayList<String> zips = SimilarityCalc.getZips();
         	for(int i = 0; i<zips.size(); i++){
-        		JSONObject o = new JSONObject();
-        		o.put("name", zips.get(i));
-        		o.put("group", 1);
-        		nodes.put(o);
+//        		if(!(zips.get(i).equals("19102"))){
+          		JSONObject o = new JSONObject();
+          		o.put("name", zips.get(i));
+          		o.put("group", 1);
+          		nodes.put(o);        			
+//        		}
         	}
         	
         	//EDGES
         	Double[][] sims = SimilarityCalc.doit();
         	JSONArray links = new JSONArray();
         	for(int i = 0; i<zips.size(); i++){
-          	for(int j = 0; j<zips.size(); j++){
+          	for(int j = 0; j<i; j++){
 	        		Double distance = sims[i][j];
-	        		if(distance < 3 && !zips.get(i).equals("19102") && !zips.get(j).equals("19102")){
+	        		Double threshold = 0.45;
+	        		if(distance < threshold && !zips.get(i).equals("19102") && !zips.get(j).equals("19102")){
 		        		JSONObject o = new JSONObject();
 		        		o.put("source", i);
 		        		o.put("target", j);
-		        		o.put("value", (int)(4-distance));
+		        		o.put("value", (int)((threshold-distance)*10));
 		        		links.put(o);
 	        		}
           	}
