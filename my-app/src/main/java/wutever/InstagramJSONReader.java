@@ -32,7 +32,7 @@ public class InstagramJSONReader {
    /**
     * Constructor
     */
-   private InstagramJSONReader(){
+   InstagramJSONReader(){
 	   
    }
 
@@ -131,7 +131,7 @@ public class InstagramJSONReader {
 			JSONObject images = temp.getJSONObject("images");
 			JSONObject image = images.getJSONObject("standard_resolution");
 			String imageURL = image.getString("url");
-			String key = "picture_" + Integer.toString(i);
+			String key = "photo";
 			map.put(key, imageURL);
 			System.out.println(imageURL);
 			
@@ -148,7 +148,7 @@ public class InstagramJSONReader {
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	public static synchronized HashMap<String, HashMap<String, String>> getZipcodePhotos(String zipcode) throws JSONException, IOException{
+	public synchronized HashMap<String, HashMap<String, String>> getZipcodePhotos(String zipcode) throws JSONException, IOException{
 		HashMap<String, HashMap<String, String>> photos = new HashMap<String, HashMap<String, String>>();
 		String[] tempLngLat = getLatLong(zipcode);
 		String igURL = createURL(tempLngLat);

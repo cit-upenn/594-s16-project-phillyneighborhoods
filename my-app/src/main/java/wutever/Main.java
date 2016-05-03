@@ -16,22 +16,20 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import wutever.ACSData;
 
-
-
-
-
+import java.io.IOException;
 import java.util.*;
+import java.util.Map.Entry;
+
+import org.json.JSONException;
 
 public class Main {
 	
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JSONException, IOException {
     	
     	staticFileLocation("/resources/templates");
     	Spark.staticFileLocation("/public");
     	
-       	
-    	createInstagram();
-
+       
 
     	/*NOTE! I removed createACSData() and put this back into main() because of weird
     	 * static variable errors when I tried to make myACSData and ACSbyZIP static class variables
@@ -158,13 +156,38 @@ public class Main {
         MustacheTemplateEngine mte = new MustacheTemplateEngine();
         return mte.render(mv);
     	});
+        
+
+        
+        get("/IG/:ZIP", (request, response) -> {
+        	String zip = request.params(":ZIP");
+        	InstagramJSONReader ig = new InstagramJSONReader();
+    		Map<String, Object> igViewObjects = new HashMap<String, Object>();  
+
+        	
+          	//get photos from InstagramJSONReader,  zip: {"photo" : url}
+    		HashMap<String, HashMap<String, String>> photos = ig.getZipcodePhotos(zip);
+    		
+    		System.out.println(photos.isEmpty());
+    		
+    		
+    		Collection<String> urls = photos.get(zip).values();
+    		
+    		igViewObjects.put("photos", urls);
+
+            ModelAndView mv = new ModelAndView(igViewObjects, "instagram.mustache");
+            MustacheTemplateEngine mte = new MustacheTemplateEngine();
+            return mte.render(mv);
+        	}
+            
+            );
+        
+
+        	
     	
     }
     
-    
-    public static void createInstagram(){
-    	InstagramJSONReader igData = new InstagramJSONReader();
-    }
+ 
     
     /*
      * This refreshes the API calls so that we get new Instagram pictures!
