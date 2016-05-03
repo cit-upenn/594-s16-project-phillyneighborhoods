@@ -82,18 +82,26 @@ public class Main {
          post("/submitform", (request, response) -> {
             Set <String> queryParams = request.queryParams();
             //System.out.println("filename " + request.queryParams("filename").toCharArray().toString());
-         StringBuilder str = new StringBuilder();
-         str.append("Request Parameters are <br/>");
-         for(String param : queryParams){
-          System.out.println("param " + param);
-          System.out.println("param value " + request.queryParams("firstname"));
-          str.append(param).append(" ").append(request.queryParams(param)).append("<br />");
-         }
-         String[] zipArray  = myACSData.findZipCode(request.queryParams("age"), request.queryParams("maritalstatus"), request.queryParams("income"));
-         StringBuilder str1 = new StringBuilder();
-         str1.append("Your top 3 zipcodes are: " ).append(zipArray[0]).append(",").append(zipArray[1]).append(",").append(zipArray[2]);
-         return str1;
-});
+	         StringBuilder str = new StringBuilder();
+	         str.append("Request Parameters are <br/>");
+	         for(String param : queryParams){
+	          System.out.println("param " + param);
+	          System.out.println("param value " + request.queryParams("firstname"));
+	          str.append(param).append(" ").append(request.queryParams(param)).append("<br />");
+	         }
+	         String[] zipArray  = myACSData.findZipCode(request.queryParams("age"), request.queryParams("maritalstatus"), request.queryParams("income"));
+	         //StringBuilder str1 = new StringBuilder();
+	         //str1.append("Your top 3 zipcodes are: " ).append(zipArray[0]).append(",").append(zipArray[1]).append(",").append(zipArray[2]);
+	         
+	         HashMap<String, String> results = new HashMap<String, String>();
+	         results.put("Zip1",zipArray[0]);
+	         results.put("Zip2",zipArray[1]);
+	         results.put("Zip3",zipArray[2]);
+	         
+	         ModelAndView mv = new ModelAndView(results, "Results.mustache");
+	         MustacheTemplateEngine mte = new MustacheTemplateEngine();
+	         return mte.render(mv);
+         });
         
         get("/similarity.json", (request, response) -> {
         	response.type("json");
