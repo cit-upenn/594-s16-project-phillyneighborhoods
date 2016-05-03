@@ -182,7 +182,14 @@ public class Main {
         
         ACSbyZIP.get(request.params(":ZIP")).put("Tweets",parsedTweets);
         
-    		
+        String zip = request.params(":ZIP");
+    	InstagramJSONReader ig = InstagramJSONReader.getInstance();
+
+      	//get photos from InstagramJSONReader,  zip: {"photo" : url}
+		Map<String, List<String>> igViewObjects = ig.getZipcodePhotos(zip);
+	
+		ACSbyZIP.get(request.params(":ZIP")).put("photos", igViewObjects.get("photos"));	
+        
         ModelAndView mv = new ModelAndView(ACSbyZIP.get(request.params(":ZIP")), "Data.mustache");
         MustacheTemplateEngine mte = new MustacheTemplateEngine();
         return mte.render(mv);
@@ -192,11 +199,13 @@ public class Main {
         
         get("/IG/:ZIP", (request, response) -> {
         	String zip = request.params(":ZIP");
-        	InstagramJSONReader ig = new InstagramJSONReader();
+        	InstagramJSONReader ig = InstagramJSONReader.getInstance();
 
           	//get photos from InstagramJSONReader,  zip: {"photo" : url}
     		Map<String, List<String>> igViewObjects = ig.getZipcodePhotos(zip);
 		
+    		ACSbyZIP.get(request.params(":ZIP")).put("photos", igViewObjects.get("photos"));
+    		
             ModelAndView mv = new ModelAndView(igViewObjects, "instagram.mustache");
             MustacheTemplateEngine mte = new MustacheTemplateEngine();
             return mte.render(mv);
