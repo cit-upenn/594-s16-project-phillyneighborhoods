@@ -185,19 +185,10 @@ public class Main {
         get("/IG/:ZIP", (request, response) -> {
         	String zip = request.params(":ZIP");
         	InstagramJSONReader ig = new InstagramJSONReader();
-    		Map<String, Object> igViewObjects = new HashMap<String, Object>();  
 
-        	
           	//get photos from InstagramJSONReader,  zip: {"photo" : url}
-    		HashMap<String, HashMap<String, String>> photos = ig.getZipcodePhotos(zip);
-    		
-    		System.out.println(photos.isEmpty());
-    		
-    		
-    		Collection<String> urls = photos.get(zip).values();
-    		
-    		igViewObjects.put("photos", urls);
-
+    		Map<String, List<String>> igViewObjects = ig.getZipcodePhotos(zip);
+		
             ModelAndView mv = new ModelAndView(igViewObjects, "instagram.mustache");
             MustacheTemplateEngine mte = new MustacheTemplateEngine();
             return mte.render(mv);

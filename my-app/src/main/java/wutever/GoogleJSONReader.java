@@ -19,6 +19,7 @@ public class GoogleJSONReader {
 	
 	private static final String stub = "http://maps.googleapis.com/maps/api/geocode/json?address=";
    private static GoogleJSONReader instance = new GoogleJSONReader();
+   static String url = "";
 
    /**
     * Constructor
@@ -40,7 +41,7 @@ public class GoogleJSONReader {
 	 * @return stub
 	 */
 	public static String getURL(){
-		return stub;
+		return url;
 	}
 	
 	/**
@@ -48,7 +49,7 @@ public class GoogleJSONReader {
 	 * @param zipcode
 	 */
 	private static synchronized String createURL(String zipcode){
-		String url = stub + zipcode;
+		url = stub + zipcode;
 		return url;
 	}
 
@@ -95,30 +96,36 @@ public class GoogleJSONReader {
 	   */
 	  private static synchronized String parse() throws JSONException, IOException{
 		JSONObject json = readJsonFromUrl(getURL());
-
+		
 		String s =  json.toString();
-		//System.out.println(s.length());
+		//System.out.println(json);
 		
-		//get index of "location"
-		int firstDelimiter = s.indexOf("location"); 
-//			System.out.println(firstDelimiter);
+		if(json.get("status") != "ZERO_RESULTS"){
+			
+
+			//get index of "location"
+			int firstDelimiter = s.indexOf("location"); 
+//				System.out.println(firstDelimiter);
+			
+			//get index of "location_type"
+			int secondDelimiter = s.indexOf("location_type"); 
+//			System.out.println(secondDelimiter);
+			
+			//get substring, e.g. location":{"lng":-75.18663959999999,"lat":39.9396284},"
+			String latitudeLongitude = s.substring(firstDelimiter, secondDelimiter); 
+			
+			//format substring
+			int thirdDelimiter = s.indexOf("lng"); 
+			int fourthDelimiter = s.indexOf("}"); 
+			latitudeLongitude = s.substring(thirdDelimiter, fourthDelimiter); 
+			latitudeLongitude = latitudeLongitude.replace("\"", "");
+			latitudeLongitude = latitudeLongitude.replace(":", "=");
+			//System.out.println(latitudeLongitude);
+			return latitudeLongitude;
+		}
 		
-		//get index of "location_type"
-		int secondDelimiter = s.indexOf("location_type"); 
-//		System.out.println(secondDelimiter);
-		
-		//get substring, e.g. location":{"lng":-75.18663959999999,"lat":39.9396284},"
-		String latitudeLongitude = s.substring(firstDelimiter, secondDelimiter); 
-		
-		//format substring
-		int thirdDelimiter = s.indexOf("lng"); 
-		int fourthDelimiter = s.indexOf("}"); 
-		latitudeLongitude = s.substring(thirdDelimiter, fourthDelimiter); 
-		latitudeLongitude = latitudeLongitude.replace("\"", "");
-		latitudeLongitude = latitudeLongitude.replace(":", "=");
-		
-//		System.out.println(latitudeLongitude);
-		return latitudeLongitude;
+		System.out.println("No latitude/longitude found.");
+		return null;
 	  }
 	  
 	  public synchronized String getLatitudeLongitude(String zipcode) throws JSONException, IOException{

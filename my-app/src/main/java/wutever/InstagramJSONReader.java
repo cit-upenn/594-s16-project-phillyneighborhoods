@@ -11,8 +11,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -69,6 +71,7 @@ public class InstagramJSONReader {
 	 */
 	private static synchronized String[] getLatLong(String zipcode) throws JSONException, IOException{
     	GoogleJSONReader g = GoogleJSONReader.getInstance();
+    	System.out.println(zipcode);
     	String googleData = g.getLatitudeLongitude(zipcode);
     	
 		//split
@@ -118,12 +121,12 @@ public class InstagramJSONReader {
 	   * @throws JSONException
 	   * @throws IOException
 	   */
-	  private static synchronized HashMap<String, String> parse(String url) throws JSONException, IOException{  
+	  private static synchronized List<String> parse(String url) throws JSONException, IOException{  
 		  
 		JSONObject json = readJsonFromUrl(url);
 		JSONArray data = json.getJSONArray("data");
 		
-		HashMap<String, String> map = new HashMap<String, String>();
+		ArrayList<String> list = new ArrayList<String>();
 		for(int i = 0; i < data.length(); i++){ //data is a JSONArray of JSONObjects
 			
 
@@ -131,13 +134,14 @@ public class InstagramJSONReader {
 			JSONObject images = temp.getJSONObject("images");
 			JSONObject image = images.getJSONObject("standard_resolution");
 			String imageURL = image.getString("url");
-			String key = "photo";
-			map.put(key, imageURL);
+			
+			list.add(imageURL);
+			
 			System.out.println(imageURL);
 			
 		}
 		
-		return map;
+		return list;
 	  }
 	  
 	  
@@ -148,13 +152,15 @@ public class InstagramJSONReader {
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	public synchronized HashMap<String, HashMap<String, String>> getZipcodePhotos(String zipcode) throws JSONException, IOException{
-		HashMap<String, HashMap<String, String>> photos = new HashMap<String, HashMap<String, String>>();
+	public synchronized HashMap<String, List<String>> getZipcodePhotos(String zipcode) throws JSONException, IOException{
+		
+		HashMap<String, List<String>> photos = new HashMap<String, List<String>>();
+		
 		String[] tempLngLat = getLatLong(zipcode);
 		String igURL = createURL(tempLngLat);
-		HashMap<String, String> photosforZip = parse(igURL);
+		List<String> photosforZip = parse(igURL);
 		
-		photos.put(zipcode, photosforZip);
+		photos.put("photos", photosforZip);
 		return photos;
 	}
 	
