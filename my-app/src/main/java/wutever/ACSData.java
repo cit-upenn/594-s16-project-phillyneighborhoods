@@ -197,8 +197,8 @@ public class ACSData {
 				
 				if(dataPoints.equals(range)){
 					
-				if(Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints))>avgMaxAge){
-					avgMaxAge = Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints));
+				if(Double.parseDouble((String) ACSbyZIP.get(ZIPCode).get(dataPoints))>avgMaxAge){
+					avgMaxAge = Double.parseDouble((String) ACSbyZIP.get(ZIPCode).get(dataPoints));
 
 //					if(dataPoints.equals(range)){
 					code = dataPoints;
@@ -208,8 +208,8 @@ public class ACSData {
 					}
 		
 			if(dataPoints.equals(marriageStatus)){
-				if(Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints))>avgMaxMarriage){
-					avgMaxMarriage = Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints));
+				if(Double.parseDouble((String) ACSbyZIP.get(ZIPCode).get(dataPoints))>avgMaxMarriage){
+					avgMaxMarriage = Double.parseDouble((String) ACSbyZIP.get(ZIPCode).get(dataPoints));
 
 //					if(dataPoints.equals(range)){
 					code = dataPoints;
@@ -219,7 +219,7 @@ public class ACSData {
 			}
 			if(dataPoints.equals("SE_T083_001")){
 				
-				double diff1 = Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints)) - Double.parseDouble(income);
+				double diff1 = Double.parseDouble((String) ACSbyZIP.get(ZIPCode).get(dataPoints)) - Double.parseDouble(income);
 				double diff2 = avgMaxIncome - Double.parseDouble(income);
 				if(diff1>diff2){
 					zipCodeIncome = ZIPCode;
