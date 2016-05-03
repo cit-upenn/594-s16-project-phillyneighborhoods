@@ -73,15 +73,7 @@ public class Main {
          */
         get("/PhillyStats", (request, response) -> new ModelAndView(ACSbyZIP, "PhillyStats.mustache"), new MustacheTemplateEngine());
         
-    	/* 
-    	 * This handles requests for ZIP code data pages
-    	 * Such that the request is formatted like "GET /Data/12345" 
-    	 * such that request.params(":zipcode") is '12345' 
-    	*/ 
-        get("/Data/:zipcode", (request, response) -> new ModelAndView(ACSbyZIP.get(request.params(":zipcode")), "Data.mustache"), new MustacheTemplateEngine());
     	
-        get("/similarity", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "similarity.mustache"), new MustacheTemplateEngine());
-
         get("/SimilarityGraph", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "SimilarityGraph.mustache"), new MustacheTemplateEngine());
 
         
@@ -124,7 +116,14 @@ public class Main {
         });
 
         
-        get("/TWITTER/:ZIP", (request, response) -> {
+        /* 
+    	 * This handles requests for ZIP code data pages
+    	 * Such that the request is formatted like "GET /Data/12345" 
+    	 * such that request.params(":zipcode") is '12345' 
+    	*/ 
+        //get("/Data/:zipcode", (request, response) -> new ModelAndView(ACSbyZIP.get(request.params(":zipcode")), "Data.mustache"), new MustacheTemplateEngine());
+        
+        get("/Data/:ZIP", (request, response) -> {
     		//initiate values for use with mustache template
         	//Map<String, Object> viewObjects = new HashMap<String, Object>();    		
         	
@@ -149,11 +148,16 @@ public class Main {
         List<Status> tweets;
         tweets = qr.getTweets();
         
+        List<String> parsedTweets = new ArrayList<String>();
         
-        ACSbyZIP.get(request.params(":ZIP")).put("Tweets",tweets);
-        //viewObjects.put("Tweet" + i, tweets.get(i).getText());
+        for(int i = 0; i < tweets.size(); i++){
+        	parsedTweets.add(tweets.get(i).getText());
+        }
+        
+        ACSbyZIP.get(request.params(":ZIP")).put("Tweets",parsedTweets);
+        
     		
-        ModelAndView mv = new ModelAndView(ACSbyZIP.get(request.params(":ZIP")), "twitter.mustache");
+        ModelAndView mv = new ModelAndView(ACSbyZIP.get(request.params(":ZIP")), "Data.mustache");
         MustacheTemplateEngine mte = new MustacheTemplateEngine();
         return mte.render(mv);
     	});

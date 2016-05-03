@@ -16,7 +16,7 @@
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 2000px}
+    .row.content {height: 2500px}
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -482,7 +482,17 @@ window.onload = function () {
 				</div>
         		<div class="col-md-6">	
 					<div id="chartContainerPieMoved" style="height: 300px; width: 100%;"></div>
-			     </div>
+			    </div>
+				
+				
+				<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2000px-Solid_white.svg.png" alt="Mountain View" style="width:50px;height:50px;">
+				
+				<ul>
+			  		{{#Tweets}}
+			  		<li>{{.}}</li>
+			  		{{/Tweets}}
+				</ul>
+			    
    		 	</div>
 		</div>
       
