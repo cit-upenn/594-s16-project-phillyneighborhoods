@@ -23,14 +23,14 @@ public class SimilarityCalc {
 	
 	public static ArrayList<String> getZips(){
 		ACSData acs = ACSData.initACSData();
-		final HashMap<String,HashMap<String, String>> dataz = acs.getACSData(); 
+		final HashMap<String,HashMap<String, Object>> dataz = acs.getACSData(); 
 		ArrayList<String> zips = new ArrayList<String>(new TreeSet<String>(dataz.keySet()));	
 		return zips;
 	}
 	
 	public static Double[][] doit(){
 		ACSData acs = ACSData.initACSData();
-		final HashMap<String,HashMap<String, String>> dataz = acs.getACSData();
+		final HashMap<String,HashMap<String, Object>> dataz = acs.getACSData();
 		ArrayList<String> zips = new ArrayList<String>(new TreeSet<String>(dataz.keySet()));	
 
 		ArrayList<String> columns = new ArrayList<String>();
@@ -49,8 +49,8 @@ public class SimilarityCalc {
 				String zip = zips.get(j);
 				String column = columns.get(i);
 				System.out.println("Processing zip " + zip + " and column "+ column);
-				HashMap<String, String> zipDataz = dataz.get(zip);
-				String dataStr = zipDataz.get(column);
+				HashMap<String, Object> zipDataz = dataz.get(zip);
+				String dataStr = zipDataz.get(column).toString();
 
 				if(dataStr!=null){
 					data[i][j] = Double.parseDouble(dataStr);					
