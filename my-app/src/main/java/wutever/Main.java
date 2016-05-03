@@ -84,6 +84,26 @@ public class Main {
 
         get("/SimilarityGraph", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "SimilarityGraph.mustache"), new MustacheTemplateEngine());
 
+        get("/GoogleMap", (request, response) -> new ModelAndView(new HashMap<String, Object>(),"Map.mustache"), new MustacheTemplateEngine());
+        
+        
+        get("/Quiz", (request, response) -> new ModelAndView(new HashMap<String, Object>(),"Quiz.mustache"), new MustacheTemplateEngine());
+
+         post("/submitform", (request, response) -> {
+            Set <String> queryParams = request.queryParams();
+            //System.out.println("filename " + request.queryParams("filename").toCharArray().toString());
+         StringBuilder str = new StringBuilder();
+         str.append("Request Parameters are <br/>");
+         for(String param : queryParams){
+          System.out.println("param " + param);
+          System.out.println("param value " + request.queryParams("firstname"));
+          str.append(param).append(" ").append(request.queryParams(param)).append("<br />");
+         }
+         String[] zipArray  = myACSData.findZipCode(request.queryParams("age"), request.queryParams("maritalstatus"), request.queryParams("income"));
+         StringBuilder str1 = new StringBuilder();
+         str1.append("Your top 3 zipcodes are: " ).append(zipArray[0]).append(",").append(zipArray[1]).append(",").append(zipArray[2]);
+         return str1;
+});
         
         get("/similarity.json", (request, response) -> {
         	response.type("json");

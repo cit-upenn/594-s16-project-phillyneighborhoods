@@ -115,6 +115,129 @@ public class ACSData {
 		return;
 	}
 	
+	
+	/**
+	 * Finds zipcode based on parameter passed in 
+	 * @param age
+	 * @param married
+	 * @param income
+	 * @return
+	 */
+	public String[] findZipCode(String age, String married, String income){
+		double avgMaxAge = 0.0;
+		double avgMaxMarriage =0.0;
+		double avgMaxIncome =0.0;
+		
+		String range = "";
+		String code = "";
+		String zipcode = "";
+		String zipCodeMarriage = "";
+		String marriageStatus = "";
+		String zipCodeIncome = "";
+		
+		double tempAge = Double.parseDouble(age);
+		if(married.equals("never married")){
+			marriageStatus = "PCT_SE_T022_002";		
+		}
+		if(married.equals("married")){
+			marriageStatus = "PCT_SE_T022_003";		
+		}
+		if(married.equals("separated")){
+			marriageStatus = "PCT_SE_T022_004";		
+		}
+		if(married.equals("widowed")){
+			marriageStatus = "PCT_SE_T022_005";		
+		}
+		if(married.equals("divorced")){
+			marriageStatus = "PCT_SE_T022_006";		
+		}
+		
+		
+		if(tempAge <= 5){
+			range ="PCT_SE_T005_003";
+		}
+		else if(tempAge >5 && tempAge <=9){
+			range = "PCT_SE_T005_004"; 
+		}
+		else if(tempAge >9 && tempAge <=14){
+			range = "PCT_SE_T005_005"; 
+		}
+		else if(tempAge >14 && tempAge <=17){
+			range = "PCT_SE_T005_006"; 
+		}
+		else if(tempAge >17 && tempAge <=24){
+			range = "PCT_SE_T005_007"; 
+		}
+		else if(tempAge >24 && tempAge <=34){
+			range = "PCT_SE_T005_008"; 
+		}
+		else if(tempAge >34 && tempAge <=44){
+			range = "PCT_SE_T005_009"; 
+		}
+		else if(tempAge >44 && tempAge <=54){
+			range = "PCT_SE_T005_010"; 
+		}
+		else if(tempAge >54 && tempAge <=64){
+			range = "PCT_SE_T005_011"; 
+		}
+		else if(tempAge >64 && tempAge <=74){
+			range = "PCT_SE_T005_012"; 
+		}
+		else if(tempAge >74 && tempAge <=84){
+			range = "PCT_SE_T005_013"; 
+		}
+		else if(tempAge >84){
+			range = "PCT_SE_T005_014"; 
+		}
+		for(String ZIPCode: allZIPCodes){
+			Set<String> allDataForZip = ACSbyZIP.get(ZIPCode).keySet();
+			for(String dataPoints: allDataForZip){
+				//System.out.println("ZIP " + ZIPCode + " contains data point " + dataPoints + " with value " + ACSbyZIP.get(ZIPCode).get(dataPoints));
+				
+				
+				if(dataPoints.equals(range)){
+					
+				if(Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints))>avgMaxAge){
+					avgMaxAge = Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints));
+
+//					if(dataPoints.equals(range)){
+					code = dataPoints;
+					zipcode = ZIPCode;
+					System.out.println("range: "+range);
+					}
+					}
+		
+			if(dataPoints.equals(marriageStatus)){
+				if(Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints))>avgMaxMarriage){
+					avgMaxMarriage = Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints));
+
+//					if(dataPoints.equals(range)){
+					code = dataPoints;
+					zipCodeMarriage = ZIPCode;
+					System.out.println("marriage range: "+marriageStatus);
+				}
+			}
+			if(dataPoints.equals("SE_T083_001")){
+				
+				double diff1 = Double.parseDouble(ACSbyZIP.get(ZIPCode).get(dataPoints)) - Double.parseDouble(income);
+				double diff2 = avgMaxIncome - Double.parseDouble(income);
+				if(diff1>diff2){
+					zipCodeIncome = ZIPCode;
+				}
+			}
+				
+					
+				}
+			}
+		String[] zipArray = new String[3];
+		zipArray[0] = zipCodeIncome;
+		zipArray[1] = zipCodeMarriage;
+		zipArray[2] = zipcode;
+		return zipArray;
+		}
+		
+	
+	
 	private void closeFile(){
 		
 		for(String ZIPCode: allZIPCodes){
