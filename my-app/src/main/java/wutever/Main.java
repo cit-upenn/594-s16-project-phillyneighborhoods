@@ -46,7 +46,7 @@ public class Main {
          * Example of a call to get PCT_SE_T005_003 for 19148: ACSbyZIP.get(19148).get(PCT_SE_T005_003)
          */
     	ACSData myACSData = ACSData.initACSData();
-		HashMap<String,HashMap<String, String>> ACSbyZIP = myACSData.getACSData();
+		HashMap<String,HashMap<String, Object>> ACSbyZIP = myACSData.getACSData();
     	
         
         
@@ -73,15 +73,7 @@ public class Main {
          */
         get("/PhillyStats", (request, response) -> new ModelAndView(ACSbyZIP, "PhillyStats.mustache"), new MustacheTemplateEngine());
         
-    	/* 
-    	 * This handles requests for ZIP code data pages
-    	 * Such that the request is formatted like "GET /Data/12345" 
-    	 * such that request.params(":zipcode") is '12345' 
-    	*/ 
-        get("/Data/:zipcode", (request, response) -> new ModelAndView(ACSbyZIP.get(request.params(":zipcode")), "Data.mustache"), new MustacheTemplateEngine());
     	
-        get("/similarity", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "similarity.mustache"), new MustacheTemplateEngine());
-
         get("/SimilarityGraph", (request, response) -> new ModelAndView(new HashMap<String, Object>(), "SimilarityGraph.mustache"), new MustacheTemplateEngine());
 
         get("/GoogleMap", (request, response) -> new ModelAndView(new HashMap<String, Object>(),"Map.mustache"), new MustacheTemplateEngine());
@@ -144,15 +136,22 @@ public class Main {
         });
 
         
-        get("/TWITTER/:ZIP", (request, response) -> {
+        /* 
+    	 * This handles requests for ZIP code data pages
+    	 * Such that the request is formatted like "GET /Data/12345" 
+    	 * such that request.params(":zipcode") is '12345' 
+    	*/ 
+        //get("/Data/:zipcode", (request, response) -> new ModelAndView(ACSbyZIP.get(request.params(":zipcode")), "Data.mustache"), new MustacheTemplateEngine());
+        
+        get("/Data/:ZIP", (request, response) -> {
     		//initiate values for use with mustache template
-    		Map<String, Object> viewObjects = new HashMap<String, Object>();    		
-
+        	//Map<String, Object> viewObjects = new HashMap<String, Object>();    		
+        	
     		
       	//get latitude and longitude from GoogleAPI
       	Double[] latLong = GoogleApisWrapper.getLatLongForZip(request.params(":ZIP"));
-      	viewObjects.put("lat", latLong[0]);    		
-      	viewObjects.put("lng", latLong[1]);    		
+      	//viewObjects.put("lat", latLong[0]);    		
+      	//viewObjects.put("lng", latLong[1]);    		
 
       	//get tweets from twitter API
       	GeoLocation coords = new GeoLocation(latLong[0], latLong[1]);
@@ -168,13 +167,17 @@ public class Main {
         }
         List<Status> tweets;
         tweets = qr.getTweets();
-        String tweetsString = "Tweets:";
-        for(int i =0; i<tweets.size(); i++){
-        	tweetsString += tweets.get(i).getText();
+        
+        List<String> parsedTweets = new ArrayList<String>();
+        
+        for(int i = 0; i < tweets.size(); i++){
+        	parsedTweets.add(tweets.get(i).getText());
         }
-      	viewObjects.put("alltweets", tweetsString);    		
+        
+        ACSbyZIP.get(request.params(":ZIP")).put("Tweets",parsedTweets);
+        
     		
-        ModelAndView mv = new ModelAndView(viewObjects, "twitter.mustache");
+        ModelAndView mv = new ModelAndView(ACSbyZIP.get(request.params(":ZIP")), "Data.mustache");
         MustacheTemplateEngine mte = new MustacheTemplateEngine();
         return mte.render(mv);
     	});

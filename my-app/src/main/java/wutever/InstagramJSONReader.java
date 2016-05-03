@@ -25,43 +25,38 @@ import org.json.JSONObject;
  *
  */
 public class InstagramJSONReader {
-//	static String url = "http://maps.googleapis.com/maps/api/geocode/json?address=19146";
-	static String access_token = "6468350.1677ed0.51442ec921ae44989cf30c72887d0cc0";
+	private static final String access_token = "6468350.1677ed0.51442ec921ae44989cf30c72887d0cc0";
+	private static final String stub = "https://api.instagram.com/v1/media/search?access_token=";
+    private static InstagramJSONReader instance = new InstagramJSONReader();
+
+   /**
+    * Constructor
+    */
+   private InstagramJSONReader(){
+	   
+   }
+
+   /**
+    * Getter method for instance of InstagramJSONReader
+    * @return instance
+    */
+   public static InstagramJSONReader getInstance(){
+      return instance;
+   }
 	
-	
-	static String url;
-	
-	/**
-	 * Getter method for String url
-	 * @return url
-	 */
-	public static String getURL(){
-		return url;
-	}
-	
-	/**
-	 * Setter method for String url
-	 * @param input
-	 */
-	private static void setURL(String input){
-		url = input;
-	}
 	
 	/**
 	 * Creates Instagram API URL using access token, latitude, longitude, and media search endpoint
-	 * @param access_token
 	 * @param lnglat
 	 * @return igURL
 	 */
-	private static String createInstagramURL(String access_token, String[] lnglat){
+	private static synchronized String createURL(String[] lnglat){
 		String lng = lnglat[0];
 		String lat = lnglat[1];
 		
-		String igURL = "https://api.instagram.com/v1/media/search?access_token="
-				+ access_token + "&" + lat + "&" + lng + "&count=100"; 
+		String igURL = stub + access_token + "&" + lat + "&" + lng + "&count=100"; 
 		//System.out.println(igURL);
 		
-		setURL(igURL);
 		return igURL;
 	}
 	
@@ -72,8 +67,8 @@ public class InstagramJSONReader {
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	private static String[] getLatLong(String zipcode) throws JSONException, IOException{
-    	GoogleJSONReader g = new GoogleJSONReader();
+	private static synchronized String[] getLatLong(String zipcode) throws JSONException, IOException{
+    	GoogleJSONReader g = GoogleJSONReader.getInstance();
     	String googleData = g.getLatitudeLongitude(zipcode);
     	
 		//split
@@ -88,7 +83,7 @@ public class InstagramJSONReader {
 	 * @return stringBuilder.toString()
 	 * @throws IOException
 	 */
-	 private static String readAll(Reader reader) throws IOException {
+	 private static synchronized String readAll(Reader reader) throws IOException {
 		    StringBuilder stringBuilder = new StringBuilder();
 		    int next;
 		    while ((next = reader.read()) != -1) {
@@ -104,7 +99,7 @@ public class InstagramJSONReader {
 	  * @throws IOException
 	  * @throws JSONException
 	  */
-	  private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+	  private static synchronized JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 	    InputStream inputStream = new URL(url).openStream();
 	    
 	    try {
@@ -123,8 +118,9 @@ public class InstagramJSONReader {
 	   * @throws JSONException
 	   * @throws IOException
 	   */
-	  private static HashMap<String, String> parse() throws JSONException, IOException{  
-		JSONObject json = readJsonFromUrl(getURL());
+	  private static synchronized HashMap<String, String> parse(String url) throws JSONException, IOException{  
+		  
+		JSONObject json = readJsonFromUrl(url);
 		JSONArray data = json.getJSONArray("data");
 		
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -152,11 +148,11 @@ public class InstagramJSONReader {
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	public static HashMap<String, HashMap<String, String>> getZipcodePhotos(String zipcode) throws JSONException, IOException{
+	public static synchronized HashMap<String, HashMap<String, String>> getZipcodePhotos(String zipcode) throws JSONException, IOException{
 		HashMap<String, HashMap<String, String>> photos = new HashMap<String, HashMap<String, String>>();
 		String[] tempLngLat = getLatLong(zipcode);
-		String igURL = createInstagramURL(access_token, tempLngLat);
-		HashMap<String, String> photosforZip = parse();
+		String igURL = createURL(tempLngLat);
+		HashMap<String, String> photosforZip = parse(igURL);
 		
 		photos.put(zipcode, photosforZip);
 		return photos;

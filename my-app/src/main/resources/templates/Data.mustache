@@ -16,7 +16,7 @@
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 2000px}
+    .row.content {height: 2500px}
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -115,8 +115,8 @@ window.onload = function () {
 		{       
 			type: "pie",
 			showInLegend: true,
-			toolTipContent: "{y} - #percent %",
-			yValueFormatString: "#0.#,,. Million",
+			toolTipContent: "{y} %",
+			
 			legendText: "{indexLabel}",
 			dataPoints: [
 				{  y: {{PCT_SE_T018_002}}, indexLabel: "family with children" },
@@ -137,8 +137,8 @@ window.onload = function () {
 		{       
 			type: "pie",
 			showInLegend: true,
-			toolTipContent: "{y} - #percent %",
-			yValueFormatString: "#0.#,,. Million",
+			toolTipContent: "{y} %",
+			
 			legendText: "{indexLabel}",
 			dataPoints: [
 				{  y: {{PCT_SE_T022_002}}, indexLabel: "never married" },
@@ -161,8 +161,8 @@ window.onload = function () {
 		{       
 			type: "pie",
 			showInLegend: true,
-			toolTipContent: "{y} - #percent %",
-			yValueFormatString: "#0.#,,. Million",
+			toolTipContent: "{y} %",
+			
 			legendText: "{indexLabel}",
 			dataPoints: [
 				{  y: {{PCT_SE_T023_003}}, indexLabel: "same sex, male owner" },
@@ -186,8 +186,8 @@ window.onload = function () {
 		{       
 			type: "pie",
 			showInLegend: true,
-			toolTipContent: "{y} - #percent %",
-			yValueFormatString: "#0.#,,. Million",
+			toolTipContent: "{y} %",
+			
 			legendText: "{indexLabel}",
 			dataPoints: [
 				{  y: {{PCT_SE_T150_002}}, indexLabel: "< high school" },
@@ -213,8 +213,8 @@ window.onload = function () {
 		{       
 			type: "pie",
 			showInLegend: true,
-			toolTipContent: "{y} - #percent %",
-			yValueFormatString: "#0.#,,. Million",
+			toolTipContent: "{y} %",
+			
 			legendText: "{indexLabel}",
 			dataPoints: [
 				{  y: {{PCT_SE_T033_003}}, indexLabel: "Military" },
@@ -237,8 +237,8 @@ window.onload = function () {
 		{       
 			type: "pie",
 			showInLegend: true,
-			toolTipContent: "{y} - #percent %",
-			yValueFormatString: "#0.#,,. Million",
+			toolTipContent: "{y} %",
+			
 			legendText: "{indexLabel}",
 			dataPoints: [
 				{  y: {{PCT_SE_T096_002}}, indexLabel: "for rent" },
@@ -260,8 +260,8 @@ window.onload = function () {
 		{       
 			type: "pie",
 			showInLegend: true,
-			toolTipContent: "{y} - #percent %",
-			yValueFormatString: "#0.#,,. Million",
+			toolTipContent: "{y} %",
+			
 			legendText: "{indexLabel}",
 			dataPoints: [
 				{  y: {{PCT_SE_T097_002}}, indexLabel: "Single" },
@@ -287,8 +287,7 @@ window.onload = function () {
 		{       
 			type: "pie",
 			showInLegend: true,
-			toolTipContent: "{y} - #percent %",
-			yValueFormatString: "#0.#,,. Million",
+			toolTipContent: "{y} %",
 			legendText: "{indexLabel}",
 			dataPoints: [
 				{  y: {{PCT_SE_T130_002}}, indexLabel: "didn't move" },
@@ -484,7 +483,17 @@ window.onload = function () {
 				</div>
         		<div class="col-md-6">	
 					<div id="chartContainerPieMoved" style="height: 300px; width: 100%;"></div>
-			     </div>
+			    </div>
+				
+				
+				<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2000px-Solid_white.svg.png" alt="Mountain View" style="width:50px;height:50px;">
+				
+				<ul>
+			  		{{#Tweets}}
+			  		<li>{{.}}</li>
+			  		{{/Tweets}}
+				</ul>
+			    
    		 	</div>
 		</div>
       
