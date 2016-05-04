@@ -1,1 +1,1 @@
-web: java -cp target/classes:”target/wutever/*” com.phyillyneighborhoods.app.Main
+web: java -cp target/classes:target/dependency/* wutever.Main
