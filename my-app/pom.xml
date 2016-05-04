@@ -96,9 +96,7 @@
 		        <!-- Use your own application name -->
 		        <appName>philly-neighborhoods</appName> 
 		        <processTypes>
-		            <!-- Tell Heroku how to launch your application -->
-		            <!-- You might have to remove the ./ in front   -->
-		            
+
 		            <web>java -cp target/classes:target/dependency/* Main</web>
 		        </processTypes>
 		    </configuration>
