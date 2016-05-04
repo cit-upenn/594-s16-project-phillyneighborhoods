@@ -3,7 +3,6 @@
   <groupId>com.phyillyneighborhoods.app</groupId>
   <artifactId>my-app</artifactId>
   <name>new-spark-project</name>
-  <packaging>war</packaging>
 
 <dependencies>
 	<dependency>
@@ -86,39 +85,7 @@
             </configuration>
         </plugin>
         
-        <plugin>
-		    <artifactId>maven-war-plugin</artifactId>
-		    <version>2.4</version>
-		    <configuration>
-		    	<failOnMissingWebXml>false</failOnMissingWebXml>  
-		        <webResources>
-		            <resource>
-		                <filtering>true</filtering>
-		                <directory>src/main/java</directory>
-		                <includes>
-		                    <include>**/web.xml</include>
-		                </includes>
-		            </resource>
-		        </webResources>
-		        <warSourceDirectory>src/main/webapp/</warSourceDirectory>
-		        <webxml>src/main/webapp/WEB-INF/web.xml</webxml>
-		    </configuration>
-		</plugin>
-         
-<!--          <plugin>
-        <groupId>com.heroku.sdk</groupId>
-	        
-        
-        <artifactId>heroku-maven-plugin</artifactId>
-        <version>1.0.2</version>
-        <configuration>
-	        	<appName>philly-neighborhoods</appName>
-	        	<processTypes>
-			     <web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
-			  </processTypes>
-	    </configuration>
 
-      	</plugin>  -->
       	
       	<plugin>
 		    <groupId>com.heroku.sdk</groupId>
@@ -131,7 +98,7 @@
 		        <processTypes>
 		            <!-- Tell Heroku how to launch your application -->
 		            <!-- You might have to remove the ./ in front   -->
-		            <web>java -jar ./target/my-app-1.0-jar-with-dependencies.jar</web>
+		            <web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
 		        </processTypes>
 		    </configuration>
 		</plugin>
