@@ -177,7 +177,26 @@ public class Main {
         List<String> parsedTweets = new ArrayList<String>();
         
         for(int i = 0; i < tweets.size(); i++){
-        	parsedTweets.add(tweets.get(i).getText());
+        	List<String> wordList = new ArrayList<String>(Arrays.asList(tweets.get(i).getText().split(" ")));
+        	for(int j = 0; j < wordList.size(); j++){
+        		//System.out.println("Analyzing words " + wordList.get(j));
+        		if(wordList.get(j).matches("^(https://).*")){
+        			String temp = wordList.get(j);
+        			wordList.remove(j);
+        			wordList.add(j, "<a href=\"" + temp + "\">" + temp + "</a>");
+        			//<a href="url                    ">link text              </a>
+        			//<a href="https://t.co/q7fVDAbTvk">https://t.co/q7fVDAbTvk</a> 
+        			//System.out.println("FOUND A HYPERLINK" + wordList.get(j));
+        			j++;
+        		}
+        	}
+        	StringBuilder listString = new StringBuilder();
+
+        	for (String s : wordList){
+        	     listString.append(s+" ");
+        	}
+        	
+        	parsedTweets.add(listString.toString());
         }
         
         ACSbyZIP.get(request.params(":ZIP")).put("Tweets",parsedTweets);
