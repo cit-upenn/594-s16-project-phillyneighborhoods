@@ -95,10 +95,6 @@
 		        <jdkVersion>1.8</jdkVersion>
 		        <!-- Use your own application name -->
 		        <appName>philly-neighborhoods</appName> 
-		        <processTypes>
-
-		            <web>java -cp target/classes:target/dependency/* Main</web>
-		        </processTypes>
 		    </configuration>
 		</plugin>
       
