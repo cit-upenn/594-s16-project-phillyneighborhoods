@@ -41,56 +41,34 @@ public class SimilarityCalc {
 		columns.add("PCT_SE_T130_006"); //Moved from abroad
 		
 		/////////////////////////////////////////////
-		//Retrieve data as arrays from ACSdata
+		//create dataframe using ACSdata
 		
-		Double[][] data = new Double[columns.size()][zips.size()];		
+		Dataframe df = new Dataframe(columns, zips);
 		for(int i=0; i<columns.size(); i++){
 			for(int j=0; j<zips.size(); j++){
 				String zip = zips.get(j);
 				String column = columns.get(i);
-				System.out.println("Processing zip " + zip + " and column "+ column);
+
 				HashMap<String, Object> zipDataz = dataz.get(zip);
 				String dataStr = zipDataz.get(column).toString();
 
 				if(dataStr!=null){
-					data[i][j] = Double.parseDouble(dataStr);					
+					df.setValue(column, zip, Double.parseDouble(dataStr));
 				}
 				else{
-					data[i][j] = null;
+					df.setValue(column, zip, null);
 				}
 			}			
 		}
 		
-		/////////////////////////////////////////////
-		//Calculate mean, stddev and zscore of data
+		Dataframe dfz = df.zScore();
 		
-		Double[][] dataZscored = new Double[columns.size()][zips.size()];
-		Double sum, sumSq, mean, stdDev;
-		for(int i=0; i<columns.size(); i++){
-			//calculate stats!
-			sum = 0.0;
-			sumSq = 0.0;
-			for(int j=0; j<zips.size(); j++){
-				sum += data[i][j];
-				sumSq += data[i][j] * data[i][j];
-			}
-			mean = sum/zips.size();
-			stdDev = Math.sqrt(sumSq/zips.size());
-			//fill out zscore data
-			for(int j=0; j<zips.size(); j++){
-				dataZscored[i][j] = (data[i][j]-mean)/stdDev;
-			}
-			//print the results
-			System.out.println(columns.get(i) + " " + new ArrayList<Double>(Arrays.asList(data[i])));
-			System.out.println(columns.get(i) + " " + new ArrayList<Double>(Arrays.asList(dataZscored[i])));
-		}
-
 		/////////////////////////////////////////////
-		//Calculate mean, stddev and zscore of data
+		//Calculate distance between zscored data
 		
 		Double[][] zipSimilarity = new Double[zips.size()][zips.size()];
 		String zipI, zipJ, column;
-		Double zipDiff, dist;
+		Double sumSq, zipDiff, dist;
 		for(int i = 0; i<zips.size(); i++){
 			for(int j = 0; j<zips.size(); j++){
 				zipI = zips.get(i);
@@ -100,7 +78,7 @@ public class SimilarityCalc {
 				for(int k = 0; k<columns.size();k++){
 					column = columns.get(k);
 					try {
-	          zipDiff = dataZscored[k][i] - dataZscored[k][j];
+	          zipDiff = dfz.getValue(column, zipI) - dfz.getValue(column, zipJ);
 						sumSq += (zipDiff * zipDiff);
           } catch (Exception e) {
 	          e.printStackTrace();

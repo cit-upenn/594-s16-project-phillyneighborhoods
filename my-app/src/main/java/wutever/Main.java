@@ -94,9 +94,9 @@ public class Main {
 	         //str1.append("Your top 3 zipcodes are: " ).append(zipArray[0]).append(",").append(zipArray[1]).append(",").append(zipArray[2]);
 	         
 	         HashMap<String, String> results = new HashMap<String, String>();
-	         results.put("Zip1",zipArray[0]);
-	         results.put("Zip2",zipArray[1]);
-	         results.put("Zip3",zipArray[2]);
+	         results.put("Zip1","<a href=\"/Data/" + zipArray[0] + "\">" + zipArray[0] + "</a>");
+	         results.put("Zip2","<a href=\"/Data/" + zipArray[1] + "\">" + zipArray[1] + "</a>");
+	         results.put("Zip3","<a href=\"/Data/" + zipArray[2] + "\">" + zipArray[2] + "</a>");
 	         
 	         ModelAndView mv = new ModelAndView(results, "Results.mustache");
 	         MustacheTemplateEngine mte = new MustacheTemplateEngine();
@@ -177,7 +177,23 @@ public class Main {
         List<String> parsedTweets = new ArrayList<String>();
         
         for(int i = 0; i < tweets.size(); i++){
-        	parsedTweets.add(tweets.get(i).getText());
+        	List<String> wordList = new ArrayList<String>(Arrays.asList(tweets.get(i).getText().split(" ")));
+        	for(int j = 0; j < wordList.size(); j++){
+        		//System.out.println("Analyzing words " + wordList.get(j));
+        		if(wordList.get(j).matches("^(https://).*")){
+        			String temp = wordList.get(j);
+        			wordList.remove(j);
+        			wordList.add(j, "<a href=\"" + temp + "\">" + temp + "</a>");
+        			j++;
+        		}
+        	}
+        	StringBuilder listString = new StringBuilder();
+
+        	for (String s : wordList){
+        	     listString.append(s+" ");
+        	}
+        	
+        	parsedTweets.add(listString.toString());
         }
         
         ACSbyZIP.get(request.params(":ZIP")).put("Tweets",parsedTweets);

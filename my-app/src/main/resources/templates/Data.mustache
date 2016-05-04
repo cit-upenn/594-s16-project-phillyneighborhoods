@@ -16,7 +16,7 @@
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 2500px}
+    .row.content {height: 5300px}
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -321,7 +321,7 @@ window.onload = function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/">
       	<img src="http://hiddencityphila.org/wp-content/uploads/2013/09/philashape.jpg" alt="Philly" style="width:80px;height:80px;">
       </a>
     </div>
@@ -329,7 +329,6 @@ window.onload = function () {
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
         <li><a href="/SimilarityGraph">SimilarityGraph</a></li>
-        <li><a href="/GoogleMap">Map</a><li>
         <li><a href="/Quiz">Quiz</a></li>
         <li><a href="/GoogleMap">Google Maps</a></li>
         <li><a href="/About">About</a></li>
@@ -502,7 +501,7 @@ window.onload = function () {
 				
 				<ul>
 			  		{{#Tweets}}
-			  		<li>{{.}}</li>
+			  		<li>{{{.}}}</li>
 			  		{{/Tweets}}
 				</ul>
 				
