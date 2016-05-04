@@ -36,19 +36,19 @@
 	    <artifactId>twitter4j-core</artifactId>
 	    <version>[4.0,)</version>
 	</dependency>
+	
+	<dependency>
+	  <groupId>junit</groupId>
+	  <artifactId>junit</artifactId>
+	  <version>4.8.2</version>
+	</dependency>
     
 	<dependency>
 	  <groupId>org.apache.httpcomponents</groupId>
 	  <artifactId>httpclient</artifactId>
 	  <version>4.5.2</version>
 	</dependency>
-	
-	<dependency>    
-	    <groupId>jstl</groupId> 
-	    <artifactId>jstl</artifactId>
-	    <version>1.2</version>
-	</dependency>
-    
+
 	</dependencies>
 	
 	<build>
@@ -61,6 +61,29 @@
                    <source>1.8</source>
                    <target>1.8</target>
                 </configuration>
+        </plugin>
+        
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <descriptorRefs>
+                    <!-- This tells Maven to include all dependencies -->
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <archive>
+                    <manifest>
+                        <mainClass>Main</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
         </plugin>
         
         <plugin>
@@ -81,8 +104,8 @@
 		        <webxml>src/main/webapp/WEB-INF/web.xml</webxml>
 		    </configuration>
 		</plugin>
-        
-        <plugin>
+         
+<!--          <plugin>
         <groupId>com.heroku.sdk</groupId>
 	        
         
@@ -95,7 +118,23 @@
 			  </processTypes>
 	    </configuration>
 
-      	</plugin>
+      	</plugin>  -->
+      	
+      	<plugin>
+		    <groupId>com.heroku.sdk</groupId>
+		    <artifactId>heroku-maven-plugin</artifactId>
+		    <version>0.4.4</version>
+		    <configuration>
+		        <jdkVersion>1.8</jdkVersion>
+		        <!-- Use your own application name -->
+		        <appName>philly-neighborhoods</appName> 
+		        <processTypes>
+		            <!-- Tell Heroku how to launch your application -->
+		            <!-- You might have to remove the ./ in front   -->
+		            <web>java -jar ./target/my-app-1.0-jar-with-dependencies.jar</web>
+		        </processTypes>
+		    </configuration>
+		</plugin>
       
      </plugins>
      
